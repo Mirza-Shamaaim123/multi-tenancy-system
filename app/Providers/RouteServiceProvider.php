@@ -21,13 +21,24 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->routes(function () {
-            Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api.php'));
+        $centralDomain = $this->centralDomain();
+        // dd($centralDomain);
+        $this->routes(function () use ($centralDomain) {
+            foreach ($centralDomain as $domain) {
+                Route::middleware('api')
+                    ->prefix('api')
+                    ->domain($domain)
+                    ->group(base_path('routes/api.php'));
 
-            Route::middleware('web')
-                ->group(base_path('routes/web.php'));
+                Route::middleware('web')
+                    ->domain($domain)
+                    ->group(base_path('routes/web.php'));
+            }
         });
+    }
+
+    protected function centralDomain(): array
+    {
+        return config('tenancy.central_domains');
     }
 }
