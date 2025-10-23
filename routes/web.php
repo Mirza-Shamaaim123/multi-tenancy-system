@@ -4,7 +4,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TenantController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+
+
+Route::group(['domain'=>config('tenancy.central_domains.0')], function(){
+    Route::get('/', function () {
     return view('welcome');
 });
 
@@ -20,3 +23,6 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+});
+
