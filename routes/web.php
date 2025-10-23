@@ -31,6 +31,10 @@ foreach (config('tenancy.central_domains') as $domain) {
             Route::get('/tenants/edit/{id}', [TenantController::class, 'edit'])->name('tenants.edit');
             Route::put('/tenants/update/{id}', [TenantController::class, 'update'])->name('tenants.update');
             Route::delete('/tenants/{tenant}', [TenantController::class, 'destroy'])->name('tenants.destroy');
+            //          WAREHOUSE ROUTES
+             Route::get('/warehouse', function () {
+            return view('warehouse.index');
+        })->name('warehouse.index');
 
 
         });
