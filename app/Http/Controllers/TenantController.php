@@ -61,18 +61,47 @@ class TenantController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tenant $tenant)
+    public function edit(Tenant $tenant, $id)
     {
         //
+        $tenant = Tenant::with('domains')->findOrFail($id);
+        return view('tenants.edit', compact('tenant'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tenant $tenant)
+    public function update(Request $request, $id)
     {
-        //
+        $tenant = Tenant::findOrFail($id);
+
+        // Validate request
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:tenants,email,' . $id,
+            'domain_name' => 'required|string|max:255',
+            'password' => 'nullable|min:6|confirmed',
+        ]);
+
+        // Update tenant
+        $tenant->update([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => $validated['password']
+                ? bcrypt($validated['password'])
+                : $tenant->password, // keep old password if not entered
+        ]);
+
+        // Update tenant domain (assuming 1 domain per tenant)
+        if ($tenant->domains()->exists()) {
+            $tenant->domains()->update(['domain' => $validated['domain_name']]);
+        } else {
+            $tenant->domains()->create(['domain' => $validated['domain_name']]);
+        }
+
+        return redirect()->route('tenants.index')->with('success', 'Tenant updated successfully!');
     }
+
 
     /**
      * Remove the specified resource from storage.
