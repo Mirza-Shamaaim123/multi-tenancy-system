@@ -23,7 +23,7 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link >
+                    <x-nav-link :href="route('tenants.index')" :active="request()->routeIs('tenants.index')" >
                         {{ __('Warehouse') }}
                     </x-nav-link>
                 </div>

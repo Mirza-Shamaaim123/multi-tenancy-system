@@ -67,7 +67,7 @@
                                                     </a>
 
                                                     <!-- Delete Button -->
-                                                    <form action="#" method="POST"
+                                                    <form action="{{ route('tenants.destroy', $tenant->id) }}" method="POST"
                                                         onsubmit="return confirm('Are you sure to delete this tenant?')">
                                                         @csrf
                                                         @method('DELETE')

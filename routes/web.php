@@ -30,6 +30,8 @@ foreach (config('tenancy.central_domains') as $domain) {
             Route::post('/tenants', [TenantController::class, 'store'])->name('tenants.store');
             Route::get('/tenants/edit/{id}', [TenantController::class, 'edit'])->name('tenants.edit');
             Route::put('/tenants/update/{id}', [TenantController::class, 'update'])->name('tenants.update');
+            Route::delete('/tenants/{tenant}', [TenantController::class, 'destroy'])->name('tenants.destroy');
+
 
         });
 
