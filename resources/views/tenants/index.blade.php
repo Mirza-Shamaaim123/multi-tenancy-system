@@ -35,6 +35,7 @@
                                         <th class="px-6 py-3 border-b">Name</th>
                                         <th class="px-6 py-3 border-b">Email</th>
                                         <th class="px-6 py-3 border-b">Domain</th>
+                                        <th class="px-6 py-3 border-b">Warehouse</th>
                                         <th class="px-6 py-3 border-b">Created At</th>
                                         <th class="px-6 py-3 border-b text-center">Action</th>
                                     </tr>
@@ -55,6 +56,10 @@
                                                     </span>
                                                 @endforeach
                                             </td>
+                                            <td class="px-6 py-4 text-gray-700">
+                                                {{ $tenant->warehouse ? $tenant->warehouse->name : '—' }}
+                                            </td>
+
                                             <td class="px-6 py-4 text-gray-600">
                                                 {{ $tenant->created_at->format('d M Y') }}
                                             </td>
@@ -67,7 +72,8 @@
                                                     </a>
 
                                                     <!-- Delete Button -->
-                                                    <form action="{{ route('tenants.destroy', $tenant->id) }}" method="POST"
+                                                    <form action="{{ route('tenants.destroy', $tenant->id) }}"
+                                                        method="POST"
                                                         onsubmit="return confirm('Are you sure to delete this tenant?')">
                                                         @csrf
                                                         @method('DELETE')

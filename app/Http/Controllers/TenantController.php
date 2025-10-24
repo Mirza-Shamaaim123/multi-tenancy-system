@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tenant;
+use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 
@@ -14,7 +15,9 @@ class TenantController extends Controller
     public function index()
     {
         //
-        $tenants = Tenant::with('domains')->get();
+        // $tenants = Tenant::with('domains')->get();
+        $tenants = Tenant::with(['domains', 'warehouse'])->latest()->get();
+
         return view('tenants.index', compact('tenants'));
     }
 
@@ -23,8 +26,8 @@ class TenantController extends Controller
      */
     public function create()
     {
-        //
-        return view('tenants.create');
+        $warehouses = Warehouse::all(); // saare warehouses central DB se lao
+        return view('tenants.create', compact('warehouses'));
     }
 
     /**
@@ -32,22 +35,28 @@ class TenantController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        // dd($request->all());
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'domain_name' => 'required|string|max:255|unique:domains,domain',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-
+            'warehouse_id' => 'nullable|exists:warehouses,id',
         ]);
-        // dd($validatedData);
-        $tenant = Tenant::create($validatedData);
+
+        // ✅ Tenant create with specific fields
+        $tenant = Tenant::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => bcrypt($validatedData['password']),
+            'warehouse_id' => $validatedData['warehouse_id'] ?? null,
+        ]);
+
+        // ✅ Domain create separately
         $tenant->domains()->create([
             'domain' => $validatedData['domain_name'] . '.' . config('app.domain'),
-
         ]);
-        return redirect()->route('tenants.index');
+
+        return redirect()->route('tenants.index')->with('success', 'Tenant created successfully!');
     }
 
     /**
@@ -64,8 +73,9 @@ class TenantController extends Controller
     public function edit(Tenant $tenant, $id)
     {
         //
-        $tenant = Tenant::with('domains')->findOrFail($id);
-        return view('tenants.edit', compact('tenant'));
+        $tenant = Tenant::with(['domains', 'warehouse'])->findOrFail($id);
+        $warehouses = Warehouse::all(); // saare warehouses central DB se lao
+        return view('tenants.edit', compact('tenant', 'warehouses'));
     }
 
     /**
@@ -81,6 +91,7 @@ class TenantController extends Controller
             'email' => 'required|email|unique:tenants,email,' . $id,
             'domain_name' => 'required|string|max:255',
             'password' => 'nullable|min:6|confirmed',
+            'warehouse_id' => 'nullable|exists:warehouses,id',
         ]);
 
         // Update tenant
@@ -90,6 +101,7 @@ class TenantController extends Controller
             'password' => $validated['password']
                 ? bcrypt($validated['password'])
                 : $tenant->password, // keep old password if not entered
+            'warehouse_id' => $validated['warehouse_id'] ?? null,
         ]);
 
         // Update tenant domain (assuming 1 domain per tenant)
@@ -103,18 +115,18 @@ class TenantController extends Controller
     }
 
 
+
     /**
      * Remove the specified resource from storage.
      */
-   public function destroy(Tenant $tenant)
-{
-    // Delete tenant domains first if using stancl/tenancy
-    $tenant->domains()->delete();
+    public function destroy(Tenant $tenant)
+    {
+        // Delete tenant domains first if using stancl/tenancy
+        $tenant->domains()->delete();
 
-    // Delete the tenant itself
-    $tenant->delete();
+        // Delete the tenant itself
+        $tenant->delete();
 
-    return redirect()->route('tenants.index')->with('success', 'Tenant deleted successfully!');
-}
-
+        return redirect()->route('tenants.index')->with('success', 'Tenant deleted successfully!');
+    }
 }

@@ -37,6 +37,20 @@
                                 value="{{ old('domain_name', $tenant->domains->first()->domain ?? '') }}" required />
                             <x-input-error :messages="$errors->get('domain_name')" class="mt-2" />
                         </div>
+                        <div class="mt-4">
+                            <x-input-label for="warehouse_id" :value="__('Select Warehouse')" />
+                            <select id="warehouse_id" name="warehouse_id"
+                                class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                <option value="">-- Select Warehouse --</option>
+                                @foreach ($warehouses as $warehouse)
+                                    <option value="{{ $warehouse->id }}"
+                                        {{ old('warehouse_id', $tenant->warehouse_id) == $warehouse->id ? 'selected' : '' }}>
+                                        {{ $warehouse->name }} ({{ $warehouse->location }})
+                                    </option>
+                                @endforeach
+                            </select>
+                            <x-input-error :messages="$errors->get('warehouse_id')" class="mt-2" />
+                        </div>
 
                         <!-- Password -->
                         <div class="mt-4">

@@ -29,12 +29,29 @@
                             <x-input-error :messages="$errors->get('email')" class="mt-2" />
                         </div>
                         {{-- Domain Name --}}
-                         <div>
+                        <div>
                             <x-input-label for="domain_name" :value="__('Domain Name')" />
                             <x-text-input id="domain_name" class="block mt-1 w-full" type="text" name="domain_name"
                                 :value="old('domain_name')" required autofocus autocomplete="domain_name" />
                             <x-input-error :messages="$errors->get('domain_name')" class="mt-2" />
                         </div>
+                        <!-- Warehouse Dropdown -->
+                        <div class="mt-4">
+                            <x-input-label for="warehouse_id" :value="__('Select Warehouse')" />
+                            <select id="warehouse_id" name="warehouse_id"
+                                class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                <option value="">-- Select Warehouse --</option>
+                                @foreach ($warehouses as $warehouse)
+                                    <option value="{{ $warehouse->id }}"
+                                        {{ old('warehouse_id') == $warehouse->id ? 'selected' : '' }}>
+                                        {{ $warehouse->name }} ({{ $warehouse->location }})
+                                    </option>
+                                @endforeach
+                            </select>
+                            <x-input-error :messages="$errors->get('warehouse_id')" class="mt-2" />
+                        </div>
+
+
 
 
 
@@ -59,7 +76,7 @@
                         </div>
 
                         <div class="flex items-center justify-end mt-4">
-                            
+
                             <x-primary-button class="ms-4">
                                 {{ __('Create Store') }}
                             </x-primary-button>

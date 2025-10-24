@@ -17,6 +17,12 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             'name',
             'email',
             'password',
+            'warehouse_id',
         ];
     }
+public function warehouse()
+{
+    return $this->belongsTo(Warehouse::class, 'warehouse_id');
+}
+
 }
