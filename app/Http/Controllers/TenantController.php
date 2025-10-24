@@ -106,14 +106,15 @@ class TenantController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tenant $tenant)
-    {
-        // Delete tenant domains first if using stancl/tenancy
-        $tenant->domains()->delete();
+   public function destroy(Tenant $tenant)
+{
+    // Delete tenant domains first if using stancl/tenancy
+    $tenant->domains()->delete();
 
-        // Delete the tenant itself
-        $tenant->delete();
+    // Delete the tenant itself
+    $tenant->delete();
 
-        return redirect()->route('tenants.index')->with('success', 'Tenant deleted successfully!');
-    }
+    return redirect()->route('tenants.index')->with('success', 'Tenant deleted successfully!');
+}
+
 }

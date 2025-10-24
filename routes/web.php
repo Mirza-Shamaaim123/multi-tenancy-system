@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TenantController;
+use App\Http\Controllers\WarehouseController;
+use App\Models\Warehouse;
 use Illuminate\Support\Facades\Route;
 
 
@@ -33,8 +35,11 @@ foreach (config('tenancy.central_domains') as $domain) {
             Route::delete('/tenants/{tenant}', [TenantController::class, 'destroy'])->name('tenants.destroy');
             //          WAREHOUSE ROUTES
              Route::get('/warehouse', function () {
-            return view('warehouse.index');
+                $warehouses = Warehouse::latest()->get();
+            return view('warehouse.index', compact('warehouses'));
         })->name('warehouse.index');
+        Route::get('/warehouse/create', [WarehouseController::class, 'create'])->name('warehouse.create');
+        Route::post('/warehouse', [WarehouseController::class, 'store'])->name('warehouse.store');
 
 
         });
