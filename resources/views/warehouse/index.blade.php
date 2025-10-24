@@ -61,13 +61,13 @@
                                             <td class="px-6 py-4 text-center">
                                                 <div class="flex justify-center items-center space-x-4">
                                                     <!-- Edit Button -->
-                                                    <a href="#"
+                                                    <a href="{{ route('warehouse.edit', $warehouse->id) }}"
                                                         class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition">
                                                         Edit
                                                     </a>
 
                                                     <!-- Delete Button -->
-                                                    <form action="#"
+                                                    <form action="{{ route('warehouse.destroy', $warehouse->id) }}"
                                                         method="POST"
                                                         onsubmit="return confirm('Are you sure you want to delete this warehouse?')">
                                                         @csrf

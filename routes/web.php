@@ -40,6 +40,9 @@ foreach (config('tenancy.central_domains') as $domain) {
         })->name('warehouse.index');
         Route::get('/warehouse/create', [WarehouseController::class, 'create'])->name('warehouse.create');
         Route::post('/warehouse', [WarehouseController::class, 'store'])->name('warehouse.store');
+        Route::get('/warehouse/edit/{id}', [WarehouseController::class, 'edit'])->name('warehouse.edit');
+        Route::put('/warehouse/update/{id}', [WarehouseController::class, 'update'])->name('warehouse.update');
+        Route::delete('/warehouse/{warehouse}', [WarehouseController::class, 'destroy'])->name('warehouse.destroy');
 
 
         });

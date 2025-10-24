@@ -14,8 +14,8 @@ class WarehouseController extends Controller
     {
         //
         // return view('warehouse.index');
-        
-       
+
+
     }
 
     /**
@@ -65,21 +65,45 @@ class WarehouseController extends Controller
     public function edit(string $id)
     {
         //
+        $warehouse = Warehouse::findOrFail($id);
+        return view('warehouse.edit', compact('warehouse'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+            'manager_name' => 'nullable|string|max:255',
+            // 'capacity' => 'nullable|integer',
+        ]);
+
+        $warehouse = Warehouse::findOrFail($id);
+        $warehouse->update([
+            'name' => $request->name,
+            'location' => $request->location,
+            'manager_name' => $request->manager_name,
+            // 'capacity' => $request->capacity,
+        ]);
+
+        return redirect()->route('warehouse.index')
+            ->with('success', 'Warehouse updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    /**
+     * Delete a warehouse.
+     */
+    public function destroy($id)
     {
-        //
+        $warehouse = Warehouse::findOrFail($id);
+        $warehouse->delete();
+
+        return redirect()->back()->with('success', 'Warehouse deleted successfully!');
     }
 }
