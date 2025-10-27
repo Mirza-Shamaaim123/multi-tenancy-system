@@ -16,7 +16,8 @@ class TenantController extends Controller
     {
         //
         // $tenants = Tenant::with('domains')->get();
-        $tenants = Tenant::with(['domains', 'warehouse'])->latest()->get();
+        $tenants = Tenant::with(['domains', 'warehouse'])->latest()->paginate(1); // 👈 har page per 10 tenants
+
 
         return view('tenants.index', compact('tenants'));
     }
