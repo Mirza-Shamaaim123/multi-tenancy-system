@@ -45,6 +45,7 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::delete('/warehouse/{warehouse}', [WarehouseController::class, 'destroy'])->name('warehouse.destroy');
 
 
+
         });
 
         require __DIR__ . '/auth.php';
