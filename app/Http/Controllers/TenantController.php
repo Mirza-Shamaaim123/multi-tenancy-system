@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tenant;
+use App\Models\User;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Hash;
 
 class TenantController extends Controller
 {
@@ -56,6 +58,24 @@ class TenantController extends Controller
         $tenant->domains()->create([
             'domain' => $validatedData['domain_name'] . '.' . config('app.domain'),
         ]);
+
+        tenancy()->initialize($tenant);
+
+        // 4️⃣ Tenant ke DB me admin user create karo
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@store.com',
+            'password' => Hash::make('12345678'), // default password
+            'role' => 'admin',
+        ]);
+
+        // 5️⃣ Tenancy cleanup
+        tenancy()->end();
+
+        // return response()->json([
+        //     'message' => 'Tenant and admin user created successfully!',
+        //     'domain' => $tenant->domains->first()->domain,
+        // ]);
 
         return redirect()->route('tenants.index')->with('success', 'Tenant created successfully!');
     }

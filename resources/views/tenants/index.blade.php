@@ -46,28 +46,30 @@
                                         @forelse ($tenants as $key => $tenant)
                                             <tr
                                                 class="bg-white hover:bg-indigo-50 transition duration-200 ease-in-out border-b last:border-none">
-                                                <td class="px-6 py-4 text-gray-800 font-medium">{{ $key + 1 }}</td>
-                                                <td class="px-6 py-4 font-semibold text-gray-900">{{ $tenant->name }}
+                                                <td class="px-6 py-4 text-gray-800 text-center font-medium">
+                                                    {{ $key + 1 }}</td>
+                                                <td class="px-6 py-4 text-center font-semibold text-gray-900">
+                                                    {{ $tenant->name }}
                                                 </td>
-                                                <td class="px-6 py-4">{{ $tenant->email }}</td>
+                                                <td class="px-6 py-4 text-center">{{ $tenant->email }}</td>
 
-                                                <td class="px-6 py-4 space-y-1">
+                                                <td class="px-6 py-4 text-center space-y-1">
                                                     @foreach ($tenant->domains as $domain)
                                                         <span
-                                                            class="inline-block bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
+                                                            class="  inline-block bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
                                                             {{ $domain->domain }}
                                                         </span>
                                                     @endforeach
                                                 </td>
 
-                                                <td class="px-6 py-4">
+                                                <td class="px-6 py-4 text-center">
                                                     <span
                                                         class="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs font-medium">
                                                         {{ $tenant->warehouse ? $tenant->warehouse->name : '—' }}
                                                     </span>
                                                 </td>
 
-                                                <td class="px-6 py-4 text-gray-500 text-sm">
+                                                <td class="px-6 text-center py-4 text-gray-500 text-sm">
                                                     {{ $tenant->created_at->format('d M Y') }}
                                                 </td>
 
@@ -77,9 +79,9 @@
                                                         @if ($tenant->domains->isNotEmpty())
                                                             <a href="http://{{ $tenant->domains->first()->domain }}:8000/"
                                                                 target="_blank"
-                                                                class="p-2 bg-green-100 text-green-600 rounded-full hover:bg-green-200 transition"
+                                                                class="p-2  rounded-full hover:bg-green-200 transition"
                                                                 title="Visit Store">
-                                                                🏪
+                                                                <i data-lucide="store" class="w-5 h-5"></i>
                                                             </a>
                                                         @endif
 
@@ -87,7 +89,7 @@
                                                         <a href="{{ route('tenants.edit', $tenant->id) }}"
                                                             class="p-2 bg-blue-100 text-blue-600 rounded-full hover:bg-blue-200 transition"
                                                             title="Edit Tenant">
-                                                            ✏️
+                                                            <i data-lucide="edit" class="w-5 h-5"></i>
                                                         </a>
 
                                                         <form action="{{ route('tenants.destroy', $tenant->id) }}"
@@ -98,7 +100,7 @@
                                                             <button type="submit"
                                                                 class="p-2 bg-red-100 text-red-600 rounded-full hover:bg-red-200 transition"
                                                                 title="Delete Tenant">
-                                                                🗑️
+                                                                <i data-lucide="trash-2" class="w-5 h-5"></i>
                                                             </button>
                                                         </form>
 
@@ -113,7 +115,8 @@
                                         @endforelse
                                     </tbody>
                                 </table>
-                                <div class="mt-6 px-6">
+
+                                <div class="bg-white mt-6 px-6">
                                     {{ $tenants->links() }}
                                 </div>
                             </div>
@@ -142,5 +145,9 @@
         padding-right: 110px;
         padding-left: 100px;
 
+    }
+
+    .h {
+        color: white;
     }
 </style>

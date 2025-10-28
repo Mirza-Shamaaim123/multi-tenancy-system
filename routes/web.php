@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Route;
 
 
 
+
+
+
+
+
+
 // routes/web.php, api.php or any other central route files you have
 
 foreach (config('tenancy.central_domains') as $domain) {
@@ -35,7 +41,7 @@ foreach (config('tenancy.central_domains') as $domain) {
             Route::delete('/tenants/{tenant}', [TenantController::class, 'destroy'])->name('tenants.destroy');
             //          WAREHOUSE ROUTES
              Route::get('/warehouse', function () {
-                $warehouses = Warehouse::latest()->get();
+                $warehouses = Warehouse::latest()->paginate(1);
             return view('warehouse.index', compact('warehouses'));
         })->name('warehouse.index');
         Route::get('/warehouse/create', [WarehouseController::class, 'create'])->name('warehouse.create');
