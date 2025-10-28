@@ -83,9 +83,11 @@ class TenantController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Tenant $tenant)
+    public function plan(Tenant $tenant)
     {
         //
+         $tenants = Tenant::with(['domains', 'warehouse'])->latest()->get();
+        return view('plan.index');
     }
 
     /**
