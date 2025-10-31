@@ -92,7 +92,7 @@
                                <div class="form-login">
                                    <button type="submit" class="btn btn-primary w-100">Sign In</button>
                                </div>
-                               <div class="signinform">
+                               {{-- <div class="signinform">
                                    <h4>New on our platform?<a href="{{ route('tenant.register') }}" class="hover-a"> Create an account</a></h4>
                                </div>
                                <div class="form-setlogin or-text">
@@ -119,10 +119,10 @@
                                            </a>
                                        </div>
                                    </div>
-                               </div>
-                               <div class="my-4 d-flex justify-content-center align-items-center copyright-text">
+                               </div> --}}
+                               {{-- <div class="my-4 d-flex justify-content-center align-items-center copyright-text">
                                 <p>Copyright &copy; 2025 DreamsPOS</p>
-                            </div>
+                            </div> --}}
                            </div>
                         </form>
                     </div>

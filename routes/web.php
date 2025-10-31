@@ -22,8 +22,14 @@ foreach (config('tenancy.central_domains') as $domain) {
     Route::domain($domain)->group(function () {
 
         Route::get('/', function () {
-            return view('welcome');
-        });
+            return view('admin.welcome');
+        })->name('home');
+        Route::get('/about', function () {
+            return view('about');
+        })->name('about');
+        Route::get('/plan', function () {
+            return view('plan');
+        })->name('plan');
 
         Route::get('/dashboard', function () {
             return view('dashboard');
@@ -53,6 +59,7 @@ foreach (config('tenancy.central_domains') as $domain) {
 
         Route::get('/plans', [PlanController::class, 'index'])->name('plans.index');
         Route::get('/plans/create', [PlanController::class, 'create'])->name('plans.create');
+        Route::post('/plans', [PlanController::class, 'store'])->name('plans.store');
 
 
 

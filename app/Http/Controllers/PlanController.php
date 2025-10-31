@@ -21,6 +21,7 @@ class PlanController extends Controller
     public function create()
     {
         //
+        return view('plan.create');
     }
 
     /**
@@ -29,6 +30,7 @@ class PlanController extends Controller
     public function store(Request $request)
     {
         //
+        // dd($request->all());
     }
 
     /**
