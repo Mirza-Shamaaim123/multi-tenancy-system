@@ -34,68 +34,35 @@
                                         <tr>
                                             <th class="px-6 py-3">#</th>
                                             <th class="px-6 py-3">Plan</th>
-                                            <th class="px-6 py-3">Store</th>
-                                            <th class="px-6 py-3">Product</th>
-                                            {{-- <th class="px-6 py-3">Report</th>
-                                            <th class="px-6 py-3">Team Access</th> --}}
+                                            <th class="px-6 py-3">Duration</th>
+                                            <th class="px-6 py-3">Description</th>
                                             <th class="px-6 py-3">Price / Month</th>
                                             <th class="px-6 py-3 text-center">Action</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
-                                        <tr
-                                            class="bg-white hover:bg-orange-50 transition duration-200 ease-in-out border-b">
-                                            <td class="px-6 py-4 text-gray-800 text-center font-medium">1</td>
-                                            <td class="px-6 py-4 text-center font-semibold text-gray-900">Starter</td>
-                                            <td class="px-6 py-4 text-center">1</td>
-                                            <td class="px-6 py-4 text-center">100</td>
-                                            {{-- <td class="px-6 py-4 text-center">Basic</td>
-                                            <td class="px-6 py-4 text-center">❌</td> --}}
-                                            <td class="px-6 py-4 text-center">$9</td>
-                                            <td class="px-6 py-4 text-center">
-                                                <a href="/register"
-                                                    class="px-3 py-1 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition text-xs">
-                                                    Choose
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        @foreach ($plans as $index => $plan)
+                                            <tr
+                                                class="bg-white hover:bg-orange-50 transition duration-200 ease-in-out border-b">
+                                                <td class="px-6 py-4 text-gray-800 text-center font-medium">
+                                                    {{ $index + 1 }}</td>
+                                                <td class="px-6 py-4 text-center font-semibold text-gray-900">
+                                                    {{ $plan->plan }}</td>
+                                                <td class="px-6 py-4 text-center text-gray-700">
+                                                    {{ ucfirst($plan->duration) }}</td>
+                                                <td class="px-6 py-4 text-gray-600 text-sm text-center">
+                                                    {{ Str::limit($plan->description, 60) }}
+                                                </td>
+                                                <td class="px-6 py-4 text-center font-semibold text-gray-900">
+                                                    ${{ number_format($plan->price, 2) }}
+                                                </td>
+                                                
+                                            </tr>
+                                        @endforeach
+                                       
 
-                                        <tr
-                                            class="bg-white hover:bg-orange-50 transition duration-200 ease-in-out border-b">
-                                            <td class="px-6 py-4 text-gray-800 text-center font-medium">2</td>
-                                            <td class="px-6 py-4 text-center font-semibold text-gray-900">Professional
-                                            </td>
-                                            <td class="px-6 py-4 text-center">3</td>
-                                            <td class="px-6 py-4 text-center">Unlimited</td>
-                                            {{-- <td class="px-6 py-4 text-center">Advanced</td>
-                                            <td class="px-6 py-4 text-center">✅</td> --}}
-                                            <td class="px-6 py-4 text-center">$29</td>
-                                            <td class="px-6 py-4 text-center">
-                                                <a href="/register"
-                                                    class="px-3 py-1 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition text-xs">
-                                                    Choose
-                                                </a>
-                                            </td>
-                                        </tr>
 
-                                        <tr
-                                            class="bg-white hover:bg-orange-50 transition duration-200 ease-in-out border-b">
-                                            <td class="px-6 py-4 text-gray-800 text-center font-medium">3</td>
-                                            <td class="px-6 py-4 text-center font-semibold text-gray-900">Enterprise
-                                            </td>
-                                            <td class="px-6 py-4 text-center">Unlimited</td>
-                                            <td class="px-6 py-4 text-center">Unlimited</td>
-                                            {{-- <td class="px-6 py-4 text-center">Premium + Export</td>
-                                            <td class="px-6 py-4 text-center">✅</td> --}}
-                                            <td class="px-6 py-4 text-center">$99</td>
-                                            <td class="px-6 py-4 text-center">
-                                                <a href="/contact"
-                                                    class="px-3 py-1 bg-gray-800 text-white rounded-full hover:bg-gray-900 transition text-xs">
-                                                    Contact
-                                                </a>
-                                            </td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

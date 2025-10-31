@@ -15,25 +15,25 @@
 
                         <!-- Plan -->
                         <div>
-                            <x-input-label for="name" :value="__('Plan')" />
-                            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name"
-                                :value="old('name')" required autofocus autocomplete="name" />
-                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                            <x-input-label for="plan" :value="__('Plan')" />
+                            <x-text-input id="plan" class="block mt-1 w-full" type="text" name="plan"
+                                :value="old('plan')" required autofocus autocomplete="plan" />
+                            <x-input-error :messages="$errors->get('plan')" class="mt-2" />
                         </div>
 
-                        <!-- Store -->
+                        <!-- Duration -->
                         <div class="mt-4">
-                            <x-input-label for="store" :value="__('Store')" />
-                            <x-text-input id="store" class="block mt-1 w-full" type="text" name="store"
-                                :value="old('store')" required autofocus autocomplete="store" />
-                            <x-input-error :messages="$errors->get('store')" class="mt-2" />
+                            <x-input-label for="duration" :value="__('Duration')" />
+                            <x-text-input id="duration" class="block mt-1 w-full" type="text" name="duration"
+                                :value="old('duration')" required autofocus autocomplete="duration" />
+                            <x-input-error :messages="$errors->get('duration')" class="mt-2" />
                         </div>
                         {{-- Product --}}
                         <div>
-                            <x-input-label for="product" :value="__('Product')" />
-                            <x-text-input id="product" class="block mt-1 w-full" type="text" name="product"
-                                :value="old('product')" required autofocus autocomplete="product" />
-                            <x-input-error :messages="$errors->get('product')" class="mt-2" />
+                            <x-input-label for="description" :value="__('Description')" />
+                            <x-text-input id="description" class="block mt-1 w-full" type="text" name="description"
+                                :value="old('description')" required autofocus autocomplete="description" />
+                            <x-input-error :messages="$errors->get('description')" class="mt-2" />
                         </div>
                         <!-- Password -->
                         {{-- <div class="mt-4">

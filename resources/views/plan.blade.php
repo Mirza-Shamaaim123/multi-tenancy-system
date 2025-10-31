@@ -1,254 +1,180 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plans | Inventory Admin Dashboard</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #f4f6f9;
-      margin: 0;
-      overflow-x: hidden;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      width: 240px;
-      background: linear-gradient(180deg, #fd7e14, #b34700);
-      color: #fff;
-      position: fixed;
-      height: 100vh;
-      padding-top: 20px;
-    }
-
-    .sidebar h4 {
-      text-align: center;
-      margin-bottom: 40px;
-      font-weight: 600;
-    }
-
-    .sidebar a {
-      color: #fff;
-      display: block;
-      padding: 12px 25px;
-      text-decoration: none;
-      font-size: 15px;
-      border-left: 4px solid transparent;
-      transition: 0.3s;
-    }
-
-    .sidebar a:hover, .sidebar a.active {
-      background-color: rgba(255, 255, 255, 0.15);
-      border-left: 4px solid #fff3cd;
-    }
-
-    /* Main Content */
-    .main-content {
-      margin-left: 240px;
-      padding: 25px;
-    }
-
-    .topbar {
-      background-color: #fff;
-      padding: 15px 25px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 25px;
-    }
-
-    .topbar h5 {
-      margin: 0;
-      font-weight: 600;
-      color: #333;
-    }
-
-    /* Plans Section */
-    .plans-section {
-      background: #fff;
-      border-radius: 10px;
-      padding: 40px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-    }
-
-    .plans-header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-
-    .plans-header h3 {
-      font-weight: 600;
-      color: #fd7e14;
-    }
-
-    .plan-card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      padding: 30px;
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-
-    .plan-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    }
-
-    .plan-card h5 {
-      font-weight: 600;
-      color: #333;
-    }
-
-    .plan-card .price {
-      font-size: 32px;
-      color: #fd7e14;
-      font-weight: 700;
-      margin: 10px 0;
-    }
-
-    .plan-card ul {
-      list-style: none;
-      padding: 0;
-      text-align: left;
-      margin: 20px 0;
-    }
-
-    .plan-card ul li {
-      margin: 8px 0;
-      font-size: 15px;
-    }
-
-    .plan-card ul li i {
-      color: #fd7e14;
-      margin-right: 8px;
-    }
-
-    .btn-plan {
-      background: #fd7e14;
-      color: #fff;
-      border: none;
-      padding: 10px 25px;
-      border-radius: 5px;
-      transition: 0.3s;
-    }
-
-    .btn-plan:hover {
-      background: #b34700;
-    }
-
-    @media (max-width: 992px) {
-      .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-      }
-      .main-content {
-        margin-left: 0;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <h4><i class="fa-solid fa-boxes-stacked me-2"></i>Inventory Admin</h4>
-    <a href="{{ route('dashboard') }}"><i class="fa-solid fa-chart-line me-2"></i> Dashboard</a>
-    <a href="{{ route('about') }}"><i class="fa-solid fa-circle-info me-2"></i> About</a>
-    <a href="{{ route('plan') }}" class="active"><i class="fa-solid fa-layer-group me-2"></i> Plans</a>
-    {{-- <a href="#"><i class="fa-solid fa-tags me-2"></i> Categories</a>
-    <a href="#"><i class="fa-solid fa-file-invoice-dollar me-2"></i> Reports</a>
-    <a href="#"><i class="fa-solid fa-truck me-2"></i> Suppliers</a> --}}
-
-    @guest
-      <a href="{{ route('login') }}" class="logout-btn">
-        <i class="fa-solid fa-right-to-bracket me-2"></i> Login
-      </a>
-    @endguest
-
-    {{-- @auth
-      <form action="{{ route('dashboard') }}" method="POST">
-        @csrf
-        <button type="submit" class="logout-btn">
-          <i class="fa-solid fa-right-from-bracket me-2"></i> Logout
-        </button>
-      </form>
-    @endauth --}}
-  </div>
-
-  <!-- Main Content -->
-  <div class="main-content">
-    <div class="topbar">
-      <h5>Subscription Plans</h5>
-      <div>
-        <i class="fa-solid fa-bell me-3 text-secondary"></i>
-        <i class="fa-solid fa-user-circle fa-lg" style="color:#fd7e14;"></i>
-      </div>
-    </div>
-
-    <!-- Plans Section -->
-    <div class="plans-section">
-      <div class="plans-header">
-        <h3>Choose the Right Plan for Your Business</h3>
-        <p class="text-muted">Upgrade anytime to access more features 🚀</p>
-      </div>
-
-      <div class="row g-4 justify-content-center">
-        <!-- Basic Plan -->
-        <div class="col-md-4">
-          <div class="plan-card">
-            <h5>Basic</h5>
-            <p class="price">$9<span class="fs-6 text-muted">/mo</span></p>
-            <ul>
-              <li><i class="fa-solid fa-check"></i> 100 Products</li>
-              <li><i class="fa-solid fa-check"></i> 1 Admin Account</li>
-              <li><i class="fa-solid fa-check"></i> Basic Reports</li>
-              <li><i class="fa-solid fa-xmark text-danger"></i> No Supplier Access</li>
-            </ul>
-            <button class="btn-plan">Select Plan</button>
-          </div>
-        </div>
-
-        <!-- Standard Plan -->
-        <div class="col-md-4">
-          <div class="plan-card border border-warning">
-            <h5>Standard</h5>
-            <p class="price">$19<span class="fs-6 text-muted">/mo</span></p>
-            <ul>
-              <li><i class="fa-solid fa-check"></i> 500 Products</li>
-              <li><i class="fa-solid fa-check"></i> 3 Admin Accounts</li>
-              <li><i class="fa-solid fa-check"></i> Advanced Reports</li>
-              <li><i class="fa-solid fa-check"></i> Supplier Access</li>
-            </ul>
-            <button class="btn-plan">Select Plan</button>
-          </div>
-        </div>
-
-        <!-- Premium Plan -->
-        <div class="col-md-4">
-          <div class="plan-card">
-            <h5>Premium</h5>
-            <p class="price">$39<span class="fs-6 text-muted">/mo</span></p>
-            <ul>
-              <li><i class="fa-solid fa-check"></i> Unlimited Products</li>
-              <li><i class="fa-solid fa-check"></i> Unlimited Admins</li>
-              <li><i class="fa-solid fa-check"></i> Full Analytics Dashboard</li>
-              <li><i class="fa-solid fa-check"></i> 24/7 Support</li>
-            </ul>
-            <button class="btn-plan">Select Plan</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+@extends('admin.layout.main')
+@section('content')
+  <section class="page-header padding">
+            <div class="anim-elements">
+                <div class="anim-element"></div>
+                <div class="anim-element"></div>
+                <div class="anim-element"></div>
+                <div class="anim-element"></div>
+                <div class="anim-element"></div>
+            </div>
+		    <div class="container">
+		        <div class="page-content text-center">
+		            <h4>Explore The Plans</h4>
+                    <h2>No Hidden Charges! Choose <br> Your Pricing Plan.</h2>
+		            <p>Multipurpose Saas Startup HTML Template.</p>
+		        </div>
+		    </div>
+		</section><!--/. page-header -->
+        
+        <section class="pricing-section padding bd-bottom">
+            <div class="container">
+                <div class="cd-pricing-switcher-container">
+                    <div class="cd-pricing-switcher text-center">
+                        <p class="fieldset">
+                            <input type="radio" name="duration-1" value="monthly" id="monthly-1" checked>
+                            <label for="monthly-1">Monthly</label>
+                            <input type="radio" name="duration-1" value="yearly" id="yearly-1">
+                            <label for="yearly-1">Yearly</label>
+                            <span class="cd-switch"></span>
+                        </p>
+                    </div>
+                </div> <!-- .cd-pricing-switcher -->
+                <div class="row">
+                    <div class="col-lg-12 xs-padding">
+                        <div class="pricing-wrap cd-pricing-container">
+                            <ul class="cd-pricing-list cd-bounce-invert row">
+                                <li class="cd-popular col-lg-4">
+                                    <ul class="cd-pricing-wrapper">
+                                        <li data-type="monthly" class="is-visible pricing-box">
+                                            <div class="pricing-head">
+                                                <img src="{{ asset('admin_assets/img/pricing-head-1.jpg') }}" alt="img">
+                                                <h3>$29.00</h3>
+                                                <span>Starter</span>
+                                            </div>
+                                            <ul class="pricing-list">
+                                                <li>1024 MB Memory</li>
+                                                <li>10 Websites</li>
+                                                <li>Unlimited Bandwidth</li>
+                                                <li>24/7 Support</li>
+                                            </ul>
+                                            <div class="pricing-footer">
+                                                <a href="#" class="default-btn btn-blue">Get Started</a>
+                                            </div>
+                                        </li>
+                                        <li data-type="yearly" class="is-hidden pricing-box">
+                                            <div class="pricing-head">
+                                                <img src="{{ asset('admin_assets/img/pricing-head-1.jpg') }}" alt="img">
+                                                <h3>$49.00</h3>
+                                                <span>Starter</span>
+                                            </div>
+                                            <ul class="pricing-list">
+                                                <li>1024 MB Memory</li>
+                                                <li>10 Websites</li>
+                                                <li>Unlimited Bandwidth</li>
+                                                <li>24/7 Support</li>
+                                            </ul>
+                                            <div class="pricing-footer">
+                                                <a href="#" class="default-btn btn-blue">Get Started</a>
+                                            </div>
+                                        </li>
+                                    </ul> <!-- .cd-pricing-wrapper -->
+                                </li>
+                                <li class="col-lg-4">
+                                    <ul class="cd-pricing-wrapper">
+                                        <li data-type="monthly" class="is-visible pricing-box">
+                                           <div class="price-tag"><span>Recommended</span></div>
+                                            <div class="pricing-head">
+                                                <img src="{{ asset('admin_assets/img/pricing-head-2.jpg') }}" alt="img">
+                                                <h3>$49.00</h3>
+                                                <span>Premium</span>
+                                            </div>
+                                            <ul class="pricing-list">
+                                                <li>1024 MB Memory</li>
+                                                <li>10 Websites</li>
+                                                <li>Unlimited Bandwidth</li>
+                                                <li>24/7 Support</li>
+                                            </ul>
+                                            <div class="pricing-footer">
+                                                <a href="#" class="default-btn btn-blue">Get Started</a>
+                                            </div>
+                                        </li>
+                                        <li data-type="yearly" class="is-hidden pricing-box">
+                                            <div class="pricing-head">
+                                                <img src="{{ asset('admin_assets/img/pricing-head-2.jpg') }}" alt="img">
+                                                <h3>$69.00</h3>
+                                                <span>Premium</span>
+                                            </div>
+                                            <ul class="pricing-list">
+                                                <li>1024 MB Memory</li>
+                                                <li>10 Websites</li>
+                                                <li>Unlimited Bandwidth</li>
+                                                <li>24/7 Support</li>
+                                            </ul>
+                                            <div class="pricing-footer">
+                                                <a href="#" class="default-btn btn-blue">Get Started</a>
+                                            </div>
+                                        </li>
+                                    </ul> <!-- .cd-pricing-wrapper -->
+                                </li>
+                                <li class="col-lg-4">
+                                    <ul class="cd-pricing-wrapper">
+                                        <li data-type="monthly" class="is-visible pricing-box">
+                                            <div class="pricing-head">
+                                                <img src="{{ asset('admin_assets/img/pricing-head-3.jpg') }}" alt="img">
+                                                <h3>$89.00</h3>
+                                                <span>Business</span>
+                                            </div>
+                                            <ul class="pricing-list">
+                                                <li>1024 MB Memory</li>
+                                                <li>10 Websites</li>
+                                                <li>Unlimited Bandwidth</li>
+                                                <li>24/7 Support</li>
+                                            </ul>
+                                            <div class="pricing-footer">
+                                                <a href="#" class="default-btn btn-blue">Get Started</a>
+                                            </div>
+                                        </li>
+                                        <li data-type="yearly" class="is-hidden pricing-box">
+                                            <div class="pricing-head">
+                                                <img src="{{ asset('admin_assets/img/pricing-head-3.jpg') }}" alt="img">
+                                                <h3>$99.00</h3>
+                                                <span>Business</span>
+                                            </div>
+                                            <ul class="pricing-list">
+                                                <li>1024 MB Memory</li>
+                                                <li>10 Websites</li>
+                                                <li>Unlimited Bandwidth</li>
+                                                <li>24/7 Support</li>
+                                            </ul>
+                                            <div class="pricing-footer">
+                                                <a href="#" class="default-btn btn-blue">Get Started</a>
+                                            </div>
+                                        </li>
+                                    </ul> <!-- .cd-pricing-wrapper -->
+                                </li>
+                            </ul> <!-- .cd-pricing-list -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!--/. pricing-section -->
+        
+        <div class="sponsor-section bg-grey padding-60">
+            <div class="container">
+                <div id="sponsor-carousel" class="sponsor-carousel owl-carousel">
+                    <div class="sponsor-item">
+                        <img src="{{ asset('admin_assets/img/sponsor-1.png') }}" alt="sponsor">
+                    </div>
+                    <div class="sponsor-item">
+                        <img src="{{ asset('admin_assets/img/sponsor-2.png') }}" alt="sponsor">
+                    </div>
+                    <div class="sponsor-item">
+                        <img src="{{ asset('admin_assets/img/sponsor-3.png') }}" alt="sponsor">
+                    </div>
+                    <div class="sponsor-item">
+                        <img src="{{ asset('admin_assets/img/sponsor-4.png') }}" alt="sponsor">
+                    </div>
+                    <div class="sponsor-item">
+                        <img src="{{ asset('admin_assets/img/sponsor-5.png') }}" alt="sponsor">
+                    </div>
+                    <div class="sponsor-item">
+                        <img src="{{ asset('admin_assets/img/sponsor-6.png') }}" alt="sponsor">
+                    </div>
+                    <div class="sponsor-item">
+                        <img src="{{ asset('admin_assets/img/sponsor-3.png') }}" alt="sponsor">
+                    </div>
+                </div>
+            </div>
+        </div><!--/. sponsor-section -->
+@endsection

@@ -45,33 +45,33 @@
                         <ul class="nav">
                             <li><a data-scroll class="nav-link active" href="index.html">Home<span
                                         class="sr-only">(current)</span></a>
-                                <ul>
+                                {{-- <ul>
                                     <li><a href="index.html">Home Design Studio</a></li>
                                     <li><a href="index-2.html">Home Web hosting</a></li>
                                     <li><a href="index-3.html">Home Support Desk</a></li>
                                     <li><a href="index-4.html">Home Apps Landing</a></li>
                                     <li><a href="index-5.html">Home Cloud Based Saas</a></li>
-                                </ul>
+                                </ul> --}}
                             </li>
+                            
+                                @auth
+                                    <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                                @else
+                                    <li><a href="{{ route('login') }}">Login</a></li>
+                                @endauth
+                            
+
                             <li><a href="#">About</a>
-                                <ul>
+                                {{-- <ul>
                                     <li><a href="about-us.html">About Us</a></li>
                                     <li><a href="about-company.html">About Company</a></li>
-                                </ul>
+                                </ul> --}}
                             </li>
-                            <li><a href="#">Services</a>
-                                <ul>
-                                    <li><a href="services-1.html">Services 01</a></li>
-                                    <li><a href="services-2.html">Services 02</a></li>
-                                </ul>
+                              <li><a href="{{ route('plan') }}">Pricing Plans</a>
+                               
                             </li>
-                            <li><a href="#">Case Studies</a>
-                                <ul>
-                                    <li><a href="case-studies.html">Case Studies</a></li>
-                                    <li><a href="case-details.html">Case Studies Single</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">Pages</a>
+                           
+                            {{-- <li><a href="#">Pages</a>
                                 <ul>
                                     <li><a href="job-listing.html">Job Listing</a></li>
                                     <li><a href="job-details.html">Job Details</a></li>
@@ -82,14 +82,14 @@
                                     <li><a href="faq.html">FAQ's</a></li>
                                     <li><a href="404.html">404 Error</a></li>
                                 </ul>
-                            </li>
-                            <li><a href="#">Blog</a>
+                            </li> --}}
+                            {{-- <li><a href="#">Blog</a>
                                 <ul>
                                     <li><a href="blog-grid.html">Blog Grid</a></li>
                                     <li><a href="blog-classic.html">Blog Classic</a></li>
                                     <li><a href="blog-single.html">Blog Single</a></li>
                                 </ul>
-                            </li>
+                            </li> --}}
                             <li><a href="contact.html">Contact</a></li>
                         </ul>
                     </div>
