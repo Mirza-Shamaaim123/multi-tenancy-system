@@ -6,6 +6,7 @@ use App\Http\Controllers\TenantController;
 use App\Http\Controllers\WarehouseController;
 use App\Models\Warehouse;
 use Illuminate\Support\Facades\Route;
+use App\Models\Plan;
 
 
 
@@ -28,7 +29,8 @@ foreach (config('tenancy.central_domains') as $domain) {
             return view('about');
         })->name('about');
         Route::get('/plan', function () {
-            return view('plan');
+              $plans = Plan::all()->groupBy('plan');
+            return view('plan', compact('plans'));
         })->name('plan');
 
         Route::get('/dashboard', function () {
