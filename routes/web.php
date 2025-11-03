@@ -8,6 +8,7 @@ use App\Http\Controllers\WarehouseController;
 use App\Models\Warehouse;
 use Illuminate\Support\Facades\Route;
 use App\Models\Plan;
+use App\Http\Controllers\StripeController;
 
 
 
@@ -30,7 +31,7 @@ foreach (config('tenancy.central_domains') as $domain) {
             return view('about');
         })->name('about');
         Route::get('/plan', function () {
-              $plans = Plan::all()->groupBy('plan');
+            $plans = Plan::all()->groupBy('plan');
             return view('plan', compact('plans'));
         })->name('plan');
 
@@ -55,30 +56,32 @@ foreach (config('tenancy.central_domains') as $domain) {
             Route::put('/tenants/update/{id}', [TenantController::class, 'update'])->name('tenants.update');
             Route::delete('/tenants/{tenant}', [TenantController::class, 'destroy'])->name('tenants.destroy');
             //          WAREHOUSE ROUTES
-             Route::get('/warehouse', function () {
+            Route::get('/warehouse', function () {
                 $warehouses = Warehouse::latest()->paginate(1);
-            return view('warehouse.index', compact('warehouses'));
-        })->name('warehouse.index');
-        Route::get('/warehouse/create', [WarehouseController::class, 'create'])->name('warehouse.create');
-        Route::post('/warehouse', [WarehouseController::class, 'store'])->name('warehouse.store');
-        Route::get('/warehouse/edit/{id}', [WarehouseController::class, 'edit'])->name('warehouse.edit');
-        Route::put('/warehouse/update/{id}', [WarehouseController::class, 'update'])->name('warehouse.update');
-        Route::delete('/warehouse/{warehouse}', [WarehouseController::class, 'destroy'])->name('warehouse.destroy');
+                return view('warehouse.index', compact('warehouses'));
+            })->name('warehouse.index');
+            Route::get('/warehouse/create', [WarehouseController::class, 'create'])->name('warehouse.create');
+            Route::post('/warehouse', [WarehouseController::class, 'store'])->name('warehouse.store');
+            Route::get('/warehouse/edit/{id}', [WarehouseController::class, 'edit'])->name('warehouse.edit');
+            Route::put('/warehouse/update/{id}', [WarehouseController::class, 'update'])->name('warehouse.update');
+            Route::delete('/warehouse/{warehouse}', [WarehouseController::class, 'destroy'])->name('warehouse.destroy');
 
-        Route::get('/plans', [PlanController::class, 'index'])->name('plans.index');
-        Route::get('/plans/create', [PlanController::class, 'create'])->name('plans.create');
-        Route::post('/plans', [PlanController::class, 'store'])->name('plans.store');
-        Route::get('/plans/edit/{id}', [PlanController::class, 'edit'])->name('plans.edit');
-        Route::put('/plans/{id}', [PlanController::class, 'update'])->name('plans.update');
-        Route::delete('/plans/{id}', [PlanController::class, 'destroy'])->name('plans.destroy');
-
-        
-        Route::post('/checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');
+            Route::get('/plans', [PlanController::class, 'index'])->name('plans.index');
+            Route::get('/plans/create', [PlanController::class, 'create'])->name('plans.create');
+            Route::post('/plans', [PlanController::class, 'store'])->name('plans.store');
+            Route::get('/plans/edit/{id}', [PlanController::class, 'edit'])->name('plans.edit');
+            Route::put('/plans/{id}', [PlanController::class, 'update'])->name('plans.update');
+            Route::delete('/plans/{id}', [PlanController::class, 'destroy'])->name('plans.destroy');
 
 
+            Route::post('/checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');
+            Route::get('/checkout/stripe/{id}', [CheckoutController::class, 'stripeCheckout'])->name('checkout.stripe');
 
 
 
+
+            Route::get('stripe', [StripeController::class, 'index']);
+            Route::post('stripe', [StripeController::class, 'store'])->name('stripe.post');
         });
 
         require __DIR__ . '/auth.php';

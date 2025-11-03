@@ -1254,7 +1254,7 @@ ul.nav > li > a.active{
 .search-box.support-search .nice-select{
     width: 100px;
     height: 60px;
-    line-height: 60px;
+
     border: none;
     margin-left: -2px;
     border-left: 1px solid #eaeaea;
@@ -1856,7 +1856,7 @@ ul.nav > li > a.active{
 ================*/
 .nice-select{
     height: 50px;
-    line-height: 50px;
+    /* line-height: 50px; */
     border-radius: 2px;
     border: 2px solid #eaeaea;
     border-left: none;
@@ -1865,7 +1865,7 @@ ul.nav > li > a.active{
 }
 .search-box .nice-select{
     height: 60px;
-    line-height: 60px;
+    /* line-height: 60px; */
 }
 .nice-select .list{
     border-radius: 2px;

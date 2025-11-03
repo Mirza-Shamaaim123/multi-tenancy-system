@@ -59,8 +59,8 @@
                             </div>
 
                             <div class="mb-3 ">
-                                <label for="payment" class="form-label hello">Payment Method</label>
-                                <select id="payment" name="payment_method" class="form-control hello" required>
+                                <label for="payment" class="form-label ">Payment Method</label>
+                                <select id="payment" name="payment_method" class="form-control " required>
                                     <option value="" selected disabled>Select Payment Method</option>
                                     <option value="stripe">Stripe</option>
                                     <option value="bank">Bank Transfer</option>
@@ -79,23 +79,39 @@
             </div>
         </div>
     </section>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        const stripe = Stripe("{{ config('services.stripe.key') }}");
+        const elements = stripe.elements();
+        const card = elements.create('card');
+        card.mount('#card-element');
+         const form = document.querySelector("form");
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const { token, error } = await stripe.createToken(card);
+        if (error) {
+            alert(error.message);
+        } else {
+            const hiddenInput = document.createElement("input");
+            hiddenInput.setAttribute("type", "hidden");
+            hiddenInput.setAttribute("name", "stripeToken");
+            hiddenInput.setAttribute("value", token.id);
+            form.appendChild(hiddenInput);
+            form.submit();
+        }
+    });
+    </script>
+
+    <style>
+        .form-control {
+            width: 100%;
+        }
+        .btn{
+            margin: 20px;
+        }
+    </style>
 @endsection
 
 
-<style>
- 
-    
 
-
-
-    .hello{
-        width: 100%;
-       
-        
-    }
-
-  
-
-    
-
-</style>
