@@ -46,24 +46,45 @@
                                             <tr
                                                 class="bg-white hover:bg-orange-50 transition duration-200 ease-in-out border-b">
                                                 <td class="px-6 py-4 text-gray-800 text-center font-medium">
-                                                    {{ $index + 1 }}</td>
+                                                    {{ $index + 1 }}
+                                                </td>
                                                 <td class="px-6 py-4 text-center font-semibold text-gray-900">
-                                                    {{ $plan->plan }}</td>
+                                                    {{ $plan->plan }}
+                                                </td>
                                                 <td class="px-6 py-4 text-center text-gray-700">
-                                                    {{ ucfirst($plan->duration) }}</td>
+                                                    {{ ucfirst($plan->duration) }}
+                                                </td>
                                                 <td class="px-6 py-4 text-gray-600 text-sm text-center">
                                                     {{ Str::limit($plan->description, 60) }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center font-semibold text-gray-900">
                                                     ${{ number_format($plan->price, 2) }}
                                                 </td>
-                                                
+
+                                                <!-- 👇 Action Buttons -->
+                                                <td class="px-6 py-4 text-center space-x-2">
+                                                    <!-- Edit Button -->
+                                                    <a href="{{ route('plans.edit', $plan->id) }}"
+                                                        class="inline-block bg-black hover:bg-blue-600 text-blue-600 text-sm font-semibold px-3 py-1 rounded">
+                                                        Edit
+                                                    </a>
+
+                                                    <!-- Delete Button -->
+                                                    <form action="{{ route('plans.destroy', $plan->id) }}"
+                                                        method="POST" class="inline-block"
+                                                        onsubmit="return confirm('Are you sure you want to delete this plan?');">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="bg-red-500 hover:bg-red-600 text-green-500 text-sm font-semibold px-3 py-1 rounded">
+                                                            Delete
+                                                        </button>
+                                                    </form>
+                                                </td>
                                             </tr>
                                         @endforeach
-                                       
-
-
                                     </tbody>
+
                                 </table>
                             </div>
 

@@ -48,7 +48,6 @@ class PlanController extends Controller
         ]);
 
         return redirect()->route('plans.index')->with('success', 'Plan added successfully!');
-        
     }
 
     /**
@@ -65,21 +64,45 @@ class PlanController extends Controller
     public function edit(string $id)
     {
         //
+        $plan = Plan::findOrFail($id);
+        return view('plan.edit', compact('plan'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'plan' => 'required|string|max:255',
+            'duration' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric',
+        ]);
+
+        $plan = Plan::findOrFail($id);
+        $plan->update([
+            'plan' => $request->plan,
+            'duration' => $request->duration,
+            'description' => $request->description,
+            'price' => $request->price,
+        ]);
+
+        return redirect()->route('plans.index')->with('success', 'Plan updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        // Find plan or throw 404 if not found
+        $plan = Plan::findOrFail($id);
+
+        // Delete the plan
+        $plan->delete();
+
+        // Redirect back to plans list with success message
+        return redirect()->route('plans.index')->with('success', 'Plan deleted successfully.');
     }
 }

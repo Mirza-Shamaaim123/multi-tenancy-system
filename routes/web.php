@@ -60,6 +60,10 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::get('/plans', [PlanController::class, 'index'])->name('plans.index');
         Route::get('/plans/create', [PlanController::class, 'create'])->name('plans.create');
         Route::post('/plans', [PlanController::class, 'store'])->name('plans.store');
+        Route::get('/plans/edit/{id}', [PlanController::class, 'edit'])->name('plans.edit');
+        Route::put('/plans/{id}', [PlanController::class, 'update'])->name('plans.update');
+        Route::delete('/plans/{id}', [PlanController::class, 'destroy'])->name('plans.destroy');
+
 
 
 
