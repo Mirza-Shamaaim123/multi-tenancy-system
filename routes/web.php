@@ -33,6 +33,11 @@ foreach (config('tenancy.central_domains') as $domain) {
             return view('plan', compact('plans'));
         })->name('plan');
 
+        Route::get('/checkout', function () {
+            
+            return view('checkout');
+        })->name('checkout');
+
         Route::get('/dashboard', function () {
             return view('dashboard');
         })->middleware(['auth', 'verified'])->name('dashboard');
