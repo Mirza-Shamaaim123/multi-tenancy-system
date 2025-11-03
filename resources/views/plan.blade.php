@@ -54,7 +54,7 @@
                                                     @endforeach
                                                 </ul>
                                                 <div class="pricing-footer">
-                                                    <a href="{{ route('checkout') }}" class="default-btn btn-blue">Get Started</a>
+                                                    <a href="{{ route('checkout', ['planid' => $monthly->id]) }}" class="default-btn btn-blue">Get Started</a>
                                                 </div>
                                             </li>
                                         @endif
@@ -75,7 +75,7 @@
                                                     @endforeach
                                                 </ul>
                                                 <div class="pricing-footer">
-                                                    <a href="{{ route('checkout') }}" class="default-btn btn-blue">Get Started</a>
+                                                    <a href="{{ route('checkout', ['planid' => $yearly->id]) }}" class="default-btn btn-blue">Get Started</a>
                                                 </div>
                                             </li>
                                         @endif

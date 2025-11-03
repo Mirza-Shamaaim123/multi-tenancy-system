@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TenantController;
@@ -33,9 +34,9 @@ foreach (config('tenancy.central_domains') as $domain) {
             return view('plan', compact('plans'));
         })->name('plan');
 
-        Route::get('/checkout', function () {
-            
-            return view('checkout');
+        Route::get('/checkout/{planid}', function ($planid) {
+            $plan = Plan::findOrFail($planid);
+            return view('checkout', compact('plan'));
         })->name('checkout');
 
         Route::get('/dashboard', function () {
@@ -70,6 +71,10 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::get('/plans/edit/{id}', [PlanController::class, 'edit'])->name('plans.edit');
         Route::put('/plans/{id}', [PlanController::class, 'update'])->name('plans.update');
         Route::delete('/plans/{id}', [PlanController::class, 'destroy'])->name('plans.destroy');
+
+        
+        Route::post('/checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');
+
 
 
 
