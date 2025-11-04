@@ -39,6 +39,15 @@ foreach (config('tenancy.central_domains') as $domain) {
             $plan = Plan::findOrFail($planid);
             return view('checkout', compact('plan'));
         })->name('checkout');
+        Route::post('/checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');
+        Route::get('/checkout/stripe/{id}', [CheckoutController::class, 'stripeCheckout'])->name('checkout.stripe');
+        Route::get('/success', [CheckoutController::class, 'success'])->name('checkout.success');
+        Route::get('/cancel', [CheckoutController::class, 'cancel'])->name('checkout.cancel');
+
+        Route::get('/contact',function(){
+
+            return view('contact');
+        })->name('contact');
 
         Route::get('/dashboard', function () {
             return view('dashboard');
@@ -74,8 +83,7 @@ foreach (config('tenancy.central_domains') as $domain) {
             Route::delete('/plans/{id}', [PlanController::class, 'destroy'])->name('plans.destroy');
 
 
-            Route::post('/checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');
-            Route::get('/checkout/stripe/{id}', [CheckoutController::class, 'stripeCheckout'])->name('checkout.stripe');
+
 
 
 

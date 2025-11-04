@@ -80,6 +80,17 @@ class CheckoutController extends Controller
         return redirect($session->url);
     }
 
+    public function success()
+{
+    return view('success');
+}
+
+public function cancel()
+{
+    return view('cancel');
+}
+
+
 
 
     /**

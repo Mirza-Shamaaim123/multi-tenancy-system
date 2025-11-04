@@ -43,7 +43,7 @@
                 <div class="d-flex menu-wrap">
                     <div id="mainmenu" class="mainmenu">
                         <ul class="nav">
-                            <li><a data-scroll class="nav-link active" href="index.html">Home<span
+                            <li><a data-scroll class="nav-link active" href="{{ route('home') }}">Home<span
                                         class="sr-only">(current)</span></a>
                                 {{-- <ul>
                                     <li><a href="index.html">Home Design Studio</a></li>
@@ -90,7 +90,7 @@
                                     <li><a href="blog-single.html">Blog Single</a></li>
                                 </ul>
                             </li> --}}
-                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="{{ route('contact') }}">Contact</a></li>
                         </ul>
                     </div>
                     <div class="header-right">
