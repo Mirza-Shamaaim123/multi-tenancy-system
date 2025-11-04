@@ -61,7 +61,7 @@
                                 @endauth
                             
 
-                            <li><a href="#">About</a>
+                            <li><a href="{{ route('about') }}">About</a>
                                 {{-- <ul>
                                     <li><a href="about-us.html">About Us</a></li>
                                     <li><a href="about-company.html">About Company</a></li>

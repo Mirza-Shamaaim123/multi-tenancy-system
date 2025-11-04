@@ -1,232 +1,220 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About | Inventory Admin Dashboard</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #f4f6f9;
-      margin: 0;
-      overflow-x: hidden;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      width: 240px;
-      background: linear-gradient(180deg, #fd7e14, #b34700);
-      color: #fff;
-      position: fixed;
-      height: 100vh;
-      padding-top: 20px;
-    }
-
-    .sidebar h4 {
-      text-align: center;
-      margin-bottom: 40px;
-      font-weight: 600;
-    }
-
-    .sidebar a {
-      color: #fff;
-      display: block;
-      padding: 12px 25px;
-      text-decoration: none;
-      font-size: 15px;
-      border-left: 4px solid transparent;
-      transition: 0.3s;
-    }
-
-    .sidebar a:hover, .sidebar a.active {
-      background-color: rgba(255, 255, 255, 0.15);
-      border-left: 4px solid #fff3cd;
-    }
-
-    .logout-btn {
-      position: absolute;
-      bottom: 30px;
-      left: 25px;
-      background: #dc3545;
-      border: none;
-      color: #fff;
-      padding: 10px 25px;
-      border-radius: 5px;
-      transition: 0.3s;
-    }
-
-    .logout-btn:hover {
-      background: #bb2d3b;
-    }
-
-    /* Main Content */
-    .main-content {
-      margin-left: 240px;
-      padding: 25px;
-    }
-
-    .topbar {
-      background-color: #fff;
-      padding: 15px 25px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 25px;
-    }
-
-    .topbar h5 {
-      margin: 0;
-      font-weight: 600;
-      color: #333;
-    }
-
-    /* About Section */
-    .about-section {
-      background: #fff;
-      border-radius: 10px;
-      padding: 40px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-    }
-
-    .about-section h3 {
-      font-weight: 600;
-      margin-bottom: 20px;
-      color: #fd7e14;
-    }
-
-    .feature {
-      display: flex;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-
-    .feature i {
-      font-size: 20px;
-      color: #fd7e14;
-      margin-right: 10px;
-    }
-
-    .team-section {
-      margin-top: 40px;
-    }
-
-    .team-member {
-      text-align: center;
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: 0.3s;
-    }
-
-    .team-member:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-    }
-
-    .team-member img {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 10px;
-    }
-
-    .text-orange {
-      color: #fd7e14 !important;
-    }
-
-    @media (max-width: 992px) {
-      .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-      }
-      .main-content {
-        margin-left: 0;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <h4><i class="fa-solid fa-boxes-stacked me-2"></i>Inventory Admin</h4>
-    <a href="{{ route('home') }}"><i class="fa-solid fa-chart-line me-2"></i> Home</a>
-    <a href="{{ route('about') }}" class="active"><i class="fa-solid fa-circle-info me-2"></i> About</a>
-    <a href="#"><i class="fa-solid fa-tags me-2"></i> Categories</a>
-    <a href="#"><i class="fa-solid fa-file-invoice-dollar me-2"></i> Reports</a>
-    <a href="#"><i class="fa-solid fa-truck me-2"></i> Suppliers</a>
-    <button class="logout-btn"><i class="fa-solid fa-right-from-bracket me-2"></i> Logout</button>
-  </div>
-
-  <!-- Main Content -->
-  <div class="main-content">
-    <div class="topbar">
-      <h5>About This System</h5>
-      <div>
-        <i class="fa-solid fa-bell me-3 text-secondary"></i>
-        <i class="fa-solid fa-user-circle fa-lg text-orange"></i>
-      </div>
-    </div>
-
-    <!-- About Section -->
-    <div class="about-section">
-      <h3>📦 Inventory Management System</h3>
-      <p>
-        The Inventory Management System is built to help businesses efficiently handle products, suppliers, and sales using an intuitive admin interface. 
-        It ensures better stock control, faster decision-making, and a smoother workflow.
-      </p>
-
-      <h5 class="mt-4 mb-3 text-orange">✨ Key Features</h5>
-      <div class="feature"><i class="fa-solid fa-check-circle"></i> Real-time stock tracking</div>
-      <div class="feature"><i class="fa-solid fa-check-circle"></i> Detailed sales & supplier reports</div>
-      <div class="feature"><i class="fa-solid fa-check-circle"></i> Low-stock alert notifications</div>
-      <div class="feature"><i class="fa-solid fa-check-circle"></i> Secure admin & role-based login</div>
-      <div class="feature"><i class="fa-solid fa-check-circle"></i> Clean, responsive dashboard UI</div>
-
-      <!-- Team Section -->
-      <div class="team-section">
-        <h4 class="mt-5 mb-4 text-orange">👨‍💻 Developed By</h4>
-        <div class="row g-4">
-          <div class="col-md-4">
-            <div class="team-member">
-              <img src="https://i.pravatar.cc/150?img=3" alt="Dev 1">
-              <h6>Ali Khan</h6>
-              <p class="text-muted mb-0">Frontend Developer</p>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="team-member">
-              <img src="https://i.pravatar.cc/150?img=5" alt="Dev 2">
-              <h6>Hassan Ahmed</h6>
-              <p class="text-muted mb-0">Backend Developer</p>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="team-member">
-              <img src="https://i.pravatar.cc/150?img=7" alt="Dev 3">
-              <h6>Sara Malik</h6>
-              <p class="text-muted mb-0">UI/UX Designer</p>
-            </div>
-          </div>
+@extends('admin.layout.main')
+@section('content')
+    <section class="page-header padding">
+        <div class="anim-elements">
+            <div class="anim-element"></div>
+            <div class="anim-element"></div>
+            <div class="anim-element"></div>
+            <div class="anim-element"></div>
+            <div class="anim-element"></div>
         </div>
-
-        <!-- Contact Info -->
-        <div class="mt-5">
-          <h5 class="text-orange mb-3">📩 Contact Us</h5>
-          <p><i class="fa-solid fa-envelope me-2 text-orange"></i> support@inventoryadmin.com</p>
-          <p><i class="fa-solid fa-phone me-2 text-orange"></i> +92 300 1234567</p>
+        <div class="container">
+            <div class="page-content text-center">
+                <h2>About Us</h2>
+                <p>Multipurpose Saas Startup HTML Template.</p>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
+    </section><!--/. page-header -->
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    <section class="promo-section bd-bottom padding">
+        <div class="container">
+            <div class="row promo-wrap">
+                <div class="col-lg-3 col-sm-6 sm-padding">
+                    <div class="promo-item wow fadeInUp" data-wow-delay="200ms">
+                        <i class="sb sb-chart"></i>
+                        <i class="sb sb-chart transparent"></i>
+                        <h3>Data Analytics</h3>
+                        <p>We provide marketing service to startups businesses to looking for a partner digital media.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 sm-padding">
+                    <div class="promo-item wow fadeInUp" data-wow-delay="300ms">
+                        <i class="sb sb-stats"></i>
+                        <i class="sb sb-stats transparent"></i>
+                        <h3>Digital Marketing</h3>
+                        <p>We provide marketing service to startups businesses to looking for a partner digital media.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 sm-padding">
+                    <div class="promo-item wow fadeInUp" data-wow-delay="400ms">
+                        <i class="sb sb-hours"></i>
+                        <i class="sb sb-hours transparent"></i>
+                        <h3>Customer Care</h3>
+                        <p>We provide marketing service to startups businesses to looking for a partner digital media.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 sm-padding">
+                    <div class="promo-item wow fadeInUp" data-wow-delay="500ms">
+                        <i class="sb sb-target"></i>
+                        <i class="sb sb-target transparent"></i>
+                        <h3>Email Marketing</h3>
+                        <p>We provide marketing service to startups businesses to looking for a partner digital media.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!--/.promo-section-->
+
+    <section class="content-section bg-grey bd-bottom padding">
+        <div class="container">
+            <div class="row content-wrap">
+                <div class="col-lg-6 sm-padding">
+                    <div class="content-info wow fadeInLeft" data-wow-delay="300ms">
+                        <span>Features</span>
+                        <h2>Revolutionize Your Online <br>Business Today!</h2>
+                        <p>We provide marketing services to startups and small businesses to looking for a partner of their
+                            digital media, design &amp; development, lead generation and communications requirents.</p>
+                        <ul class="content-feature">
+                            <li class="content-feature-item">
+                                <i class="sb sb-stats color-red"></i>
+                                <div class="content-details">
+                                    <h3>Digital Data Analysis</h3>
+                                    <p>We provide marketing service to startups businesses to looking for a partner digital
+                                        media.</p>
+                                </div>
+                            </li>
+                            <li class="content-feature-item">
+                                <i class="sb sb-chart color-green"></i>
+                                <div class="content-details">
+                                    <h3>Marketing Automation</h3>
+                                    <p>We provide marketing service to startups businesses to looking for a partner digital
+                                        media.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6 sm-padding wow fadeInRight" data-wow-delay="300ms">
+                    <img src="{{ asset('admin_assets/img/content-1.png') }}" alt="content-img">
+                </div>
+            </div>
+        </div>
+    </section><!--/.content-section-->
+
+    <section class="tophic-team padding">
+        <div class="container">
+            <div class="section-heading text-center mb-40">
+                <span>Team Members</span>
+                <h2>Our Expert Team Would Like <br> To Hear From You!</h2>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-sm-6 sm-padding">
+                    <div class="team-wrap">
+                        <div class="team-box">
+                            <div class="overlay"></div>
+                            <img src="{{ asset('admin_assets/img/team-1.html') }}" alt="img">
+                            <ul class="team-social">
+                                <li><a href="#"><i class="ti-facebook"></i></a></li>
+                                <li><a href="#"><i class="ti-twitter"></i></a></li>
+                                <li><a href="#"><i class="ti-instagram"></i></a></li>
+                                <li><a href="#"><i class="ti-youtube"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="team-content">
+                            <h3>Fiorella Ibáñez<span>Developer</span></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 sm-padding">
+                    <div class="team-wrap">
+                        <div class="team-box">
+                            <div class="overlay"></div>
+                            <img src="{{ asset('admin_assets/img/team-2.html') }}" alt="img">
+                            <ul class="team-social">
+                                <li><a href="#"><i class="ti-facebook"></i></a></li>
+                                <li><a href="#"><i class="ti-twitter"></i></a></li>
+                                <li><a href="#"><i class="ti-instagram"></i></a></li>
+                                <li><a href="#"><i class="ti-youtube"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="team-content">
+                            <h3>José Carpio<span>Developer</span></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 sm-padding">
+                    <div class="team-wrap">
+                        <div class="team-box">
+                            <div class="overlay"></div>
+                            <img src="{{ asset('admin_assets/img/team-3.html') }}" alt="img">
+                            <ul class="team-social">
+                                <li><a href="#"><i class="ti-facebook"></i></a></li>
+                                <li><a href="#"><i class="ti-twitter"></i></a></li>
+                                <li><a href="#"><i class="ti-instagram"></i></a></li>
+                                <li><a href="#"><i class="ti-youtube"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="team-content">
+                            <h3>Jhon Castellon<span>Developer</span></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 sm-padding">
+                    <div class="team-wrap">
+                        <div class="team-box">
+                            <div class="overlay"></div>
+                            <img src="{{ asset('admin_assets/img/team-4.html') }}" alt="img">
+                            <ul class="team-social">
+                                <li><a href="#"><i class="ti-facebook"></i></a></li>
+                                <li><a href="#"><i class="ti-twitter"></i></a></li>
+                                <li><a href="#"><i class="ti-instagram"></i></a></li>
+                                <li><a href="#"><i class="ti-youtube"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="team-content">
+                            <h3>Kyle Frederick<span>Developer</span></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!--/.tophic-team-->
+
+    <section class="cta-section cta-3">
+        <div class="animate-elements">
+            <div class="animate-element circle"></div>
+            <div class="animate-element triangle"></div>
+            <div class="animate-element circle"></div>
+            <div class="animate-element circle-fill"></div>
+            <div class="animate-element triangle"></div>
+            <div class="animate-element triangle"></div>
+        </div>
+        <div class="container">
+            <div class="cta-content section-heading text-center">
+                <span>Get Help With The Advanced Support!</span>
+                <h2>We're Here To Help You! <br>Can't Find What You're Looking For?</h2>
+                <p>We provide marketing services to startups and small businesses to <br>looking for a partner of their
+                    digital media.</p>
+                <a href="#" class="default-btn btn-pink">Request A Quote</a>
+            </div>
+        </div>
+    </section><!--/.cta-section-->
+
+    <div class="sponsor-section padding-60">
+        <div class="container">
+            <div id="sponsor-carousel" class="sponsor-carousel owl-carousel">
+                <div class="sponsor-item">
+                    <img src="{{ asset('admin_assets/img/sponsor-1.png') }}" alt="sponsor">
+                </div>
+                <div class="sponsor-item">
+                    <img src="{{ asset('admin_assets/img/sponsor-2.png') }}" alt="sponsor">
+                </div>
+                <div class="sponsor-item">
+                    <img src="{{ asset('admin_assets/img/sponsor-3.png') }}" alt="sponsor">
+                </div>
+                <div class="sponsor-item">
+                    <img src="{{ asset('admin_assets/img/sponsor-4.png') }}" alt="sponsor">
+                </div>
+                <div class="sponsor-item">
+                    <img src="{{ asset('admin_assets/img/sponsor-5.png') }}" alt="sponsor">
+                </div>
+                <div class="sponsor-item">
+                    <img src="{{ asset('admin_assets/img/sponsor-6.png') }}" alt="sponsor">
+                </div>
+                <div class="sponsor-item">
+                    <img src="{{ asset('admin_assets/img/sponsor-3.png') }}" alt="sponsor">
+                </div>
+            </div>
+        </div>
+    </div><!--/. sponsor-section -->
+@endsection
