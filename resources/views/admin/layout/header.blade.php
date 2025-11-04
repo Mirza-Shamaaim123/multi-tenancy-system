@@ -93,9 +93,9 @@
                             <li><a href="{{ route('contact') }}">Contact</a></li>
                         </ul>
                     </div>
-                    <div class="header-right">
+                    {{-- <div class="header-right">
                         <div class="cart-icon"><i class="fa fa-shopping-basket"></i><span class="count">0</span></div>
-                    </div>
+                    </div> --}}
                 </div>
             </nav>
         </div>

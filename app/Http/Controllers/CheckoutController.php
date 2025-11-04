@@ -30,7 +30,7 @@ class CheckoutController extends Controller
      */
     public function store(Request $request,)
     {
-       
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email',
@@ -38,14 +38,14 @@ class CheckoutController extends Controller
             'payment_method' => 'required|string',
         ]);
 
-       $checkout = Checkout::create([
+        $checkout = Checkout::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'domain' => $validated['domain'],
             'payment_method' => $validated['payment_method'],
             'status' => 'pending', // default status
         ]);
-         if ($validated['payment_method'] === 'stripe') {
+        if ($validated['payment_method'] === 'stripe') {
             return redirect()->route('checkout.stripe', $checkout->id);
         }
         // dd($validated);
@@ -54,13 +54,13 @@ class CheckoutController extends Controller
     }
 
 
-     public function stripeCheckout($id)
+    public function stripeCheckout($id)
     {
         $checkout = Checkout::findOrFail($id);
 
-        Stripe::setApiKey(env('STRIPE_SECRET'));
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        $session = StripeSession::create([
+        $session = \Stripe\Checkout\Session::create([
             'payment_method_types' => ['card'],
             'line_items' => [[
                 'price_data' => [
@@ -73,22 +73,46 @@ class CheckoutController extends Controller
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-            'success_url' => url('/success'),
+
+            // 👇 checkout_id ko metadata me store kar rahe hain
+            'metadata' => [
+                'checkout_id' => $checkout->id,
+            ],
+
+            // 👇 Stripe yahan {CHECKOUT_SESSION_ID} ko replace karega actual session id se
+            'success_url' => url('/success?session_id={CHECKOUT_SESSION_ID}'),
             'cancel_url' => url('/cancel'),
         ]);
 
         return redirect($session->url);
     }
 
-    public function success()
-{
-    return view('success');
-}
 
-public function cancel()
-{
-    return view('cancel');
-}
+    public function success(Request $request)
+    {
+        $sessionId = $request->query('session_id'); // Stripe se mila hua session_id
+
+        if ($sessionId) {
+            Stripe::setApiKey(env('STRIPE_SECRET'));
+            $session = \Stripe\Checkout\Session::retrieve($sessionId);
+
+            // 👇 metadata se checkout_id nikal lo
+            if (isset($session->metadata->checkout_id)) {
+                $checkout = Checkout::find($session->metadata->checkout_id);
+                if ($checkout) {
+                    $checkout->update(['status' => 'success']);
+                }
+            }
+        }
+
+        return view('success');
+    }
+
+
+    public function cancel()
+    {
+        return view('cancel');
+    }
 
 
 
