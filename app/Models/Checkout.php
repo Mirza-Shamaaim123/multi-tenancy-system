@@ -14,5 +14,8 @@ class Checkout extends Model
         'domain',
         'payment_method',
         'status',
+        'plan_name',
+        'plan_type',
+        'amount',
     ];
 }

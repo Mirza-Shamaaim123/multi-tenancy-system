@@ -40,6 +40,10 @@
                         <form action="{{ route('checkout.store') }}" method="POST" class="p-3 border rounded bg-light">
                             @csrf
 
+                            <input type="hidden" name="plan_name" value="{{ $plan->plan }}">
+                            <input type="hidden" name="plan_type" value="{{ $plan->duration }}">
+                            <input type="hidden" name="amount" value="{{ $plan->price }}">
+
                             <div class="mb-3">
                                 <label for="name" class="form-label">Full Name</label>
                                 <input type="text" id="name" name="name" class="form-control"
@@ -58,22 +62,20 @@
                                     placeholder="mystore" required>
                             </div>
 
-                            <div class="mb-3 ">
-                                <label for="payment" class="form-label ">Payment Method</label>
-                                <select id="payment" name="payment_method" class="form-control " required>
+                            <div class="mb-3">
+                                <label for="payment" class="form-label">Payment Method</label>
+                                <select id="payment" name="payment_method" class="form-control" required>
                                     <option value="" selected disabled>Select Payment Method</option>
                                     <option value="stripe">Stripe</option>
                                     <option value="bank">Bank Transfer</option>
                                 </select>
                             </div>
 
-                            
-
                             <div class="text-center mt-4">
-                                <button type="submit" class="btn btn-primary px-4 py-2">Complete Purchase</button>
+                                <button type="submit" class="btn btn-primary px-4 py-2">Pay Now</button>
                             </div>
-
                         </form>
+
 
 
                     </div>
@@ -88,32 +90,33 @@
         const elements = stripe.elements();
         const card = elements.create('card');
         card.mount('#card-element');
-         const form = document.querySelector("form");
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const { token, error } = await stripe.createToken(card);
-        if (error) {
-            alert(error.message);
-        } else {
-            const hiddenInput = document.createElement("input");
-            hiddenInput.setAttribute("type", "hidden");
-            hiddenInput.setAttribute("name", "stripeToken");
-            hiddenInput.setAttribute("value", token.id);
-            form.appendChild(hiddenInput);
-            form.submit();
-        }
-    });
+        const form = document.querySelector("form");
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const {
+                token,
+                error
+            } = await stripe.createToken(card);
+            if (error) {
+                alert(error.message);
+            } else {
+                const hiddenInput = document.createElement("input");
+                hiddenInput.setAttribute("type", "hidden");
+                hiddenInput.setAttribute("name", "stripeToken");
+                hiddenInput.setAttribute("value", token.id);
+                form.appendChild(hiddenInput);
+                form.submit();
+            }
+        });
     </script>
 
     <style>
         .form-control {
             width: 100%;
         }
-        .btn{
+
+        .btn {
             margin: 20px;
         }
     </style>
 @endsection
-
-
-
