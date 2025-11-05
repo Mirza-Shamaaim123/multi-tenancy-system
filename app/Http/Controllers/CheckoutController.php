@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PlanPurchasedMail;
 use App\Models\Checkout;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
 
@@ -52,8 +54,13 @@ class CheckoutController extends Controller
             'status' => 'pending',
         ]);
         if ($validated['payment_method'] === 'stripe') {
+            // Stripe flow me jab payment success ho, tab mail bhejna better hai
             return redirect()->route('checkout.stripe', $checkout->id);
         }
+
+        // Non-stripe payment par yahan mail bhejo
+
+
         // dd($validated);
 
         return redirect()->back()->with('success', 'Checkout information saved successfully!');
@@ -64,7 +71,9 @@ class CheckoutController extends Controller
     {
         $checkout = Checkout::findOrFail($id);
 
-        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        //    Stripe::setApiKey(config('services.stripe.secret'));
+        \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+
 
         $session = \Stripe\Checkout\Session::create([
             'payment_method_types' => ['card'],
@@ -89,6 +98,7 @@ class CheckoutController extends Controller
             'success_url' => url('/success?session_id={CHECKOUT_SESSION_ID}'),
             'cancel_url' => url('/cancel'),
         ]);
+        //  Mail::to($checkout->email)->send(new PlanPurchasedMail($checkout));
 
         return redirect($session->url);
     }
@@ -99,7 +109,7 @@ class CheckoutController extends Controller
         $session_id = $request->query('session_id');
 
         if ($session_id) {
-            \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+            \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
             // Stripe Session fetch karo
             $session = \Stripe\Checkout\Session::retrieve($session_id);
@@ -110,16 +120,23 @@ class CheckoutController extends Controller
             // PaymentIntent ka status lo (e.g. "succeeded", "canceled", etc.)
             $status = $paymentIntent->status;
 
-            // Apni DB me session_id se record find karo (agar checkout_id pass nahi kar rahe)
-            $checkout = Checkout::where('id', $session->metadata->checkout_id ?? null)->first();
+            // Checkout record find karo
+            $checkout = Checkout::find($session->metadata->checkout_id ?? null);
 
             if ($checkout) {
+                // Database me status update karo
                 $checkout->update(['status' => $status]);
+
+                // ✅ Payment success hone par email bhejna
+                if ($status === 'succeeded') {
+                    Mail::to($checkout->email)->send(new PlanPurchasedMail($checkout));
+                }
             }
         }
 
         return view('success', ['status' => $status ?? 'unknown']);
     }
+
 
 
 
