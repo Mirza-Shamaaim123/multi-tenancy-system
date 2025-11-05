@@ -129,13 +129,36 @@ class CheckoutController extends Controller
 
                 // ✅ Payment success hone par email bhejna
                 if ($status === 'succeeded') {
+
+                    // 1️⃣ Plan expire date set karo based on plan_type
+                    $expiryDate = $checkout->plan_type === 'Monthly'
+                        ? now()->addMonth()
+                        : now()->addYear();
+
+                    $checkout->update(['expiry_date' => $expiryDate]);
+
+                    // 2️⃣ Immediately purchase confirmation mail
                     Mail::to($checkout->email)->send(new PlanPurchasedMail($checkout));
+
+                    // 3️⃣ 1 week baad mail bhejo
+                    Mail::to($checkout->email)->later(
+                        now()->addWeek(),
+                        new PlanPurchasedMail($checkout)
+                    );
+
+                    // 4️⃣ Plan khatam hone se 3 din pehle mail bhejo
+                    $reminderDate = $expiryDate->copy()->subDays(3);
+                    Mail::to($checkout->email)->later(
+                        $reminderDate,
+                        new PlanPurchasedMail($checkout)
+                    );
                 }
             }
         }
 
         return view('success', ['status' => $status ?? 'unknown']);
     }
+
 
 
 
