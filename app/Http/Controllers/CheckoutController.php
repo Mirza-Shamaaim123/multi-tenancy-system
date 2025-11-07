@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Mail\PlanPurchasedMail;
 use App\Models\Checkout;
+use App\Models\Tenant as ModelsTenant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
+use App\Models\Tenant;
+
+// use Stancl\Tenancy\Database\Models\Tenant;
+
 
 class CheckoutController extends Controller
 {
@@ -139,6 +144,10 @@ class CheckoutController extends Controller
                     $checkout->expiry_date = $expiryDate;
                     $checkout->save();
 
+                    // ✅ Tenant (store) create karo after payment success
+                    $this->createTenantForCheckout($checkout);
+
+
 
                     // 2️⃣ Immediately purchase confirmation mail
                     Mail::to($checkout->email)->send(new PlanPurchasedMail($checkout));
@@ -217,5 +226,39 @@ class CheckoutController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    private function createTenantForCheckout($checkout)
+    {
+        // Agar tenant already exist na ho
+        if (Tenant::where('id', $checkout->domain)->exists()) {
+            return;
+        }
+
+        // ✅ Tenant create karo
+        $tenant = Tenant::create([
+            'id'              => $checkout->domain, // e.g. mystore
+            'plan_type'       => $checkout->plan_type,
+            'plan_start_date' => $checkout->start_date,
+            'plan_end_date'   => $checkout->expiry_date,
+            'email'           => $checkout->email,
+            'name'            => $checkout->name,
+
+            // 👇 custom data (ye "data" JSON column me save hota hai)
+            'data' => [
+                'password'      => bcrypt('12345678'), // hardcoded default password
+                'warehouse_id'  => 1, // hardcoded ID (for example)
+            ],
+        ]);
+        
+
+
+        // ✅ Domain assign karo tenant ko
+        $tenant->domains()->create([
+            'domain' => "{$checkout->domain}.localhost", // e.g. mystore.localhost
+        ]);
+
+        // Optional: agar turant redirect karna ho
+        // return redirect("http://{$checkout->domain}.localhost:8000")->with('success', 'Your store has been created!');
     }
 }

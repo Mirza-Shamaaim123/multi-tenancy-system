@@ -56,8 +56,14 @@
                                     placeholder="example@email.com" required>
                             </div>
 
+                              <div class="mb-3">
+                                <label for="store_name" class="form-label">Store Name</label>
+                                <input type="text" id="store_name" name="store_name" class="form-control"
+                                    placeholder="mystore" required>
+                            </div>
+
                             <div class="mb-3">
-                                <label for="domain" class="form-label">Store / Domain Name</label>
+                                <label for="domain" class="form-label">Domain Name</label>
                                 <input type="text" id="domain" name="domain" class="form-control"
                                     placeholder="mystore" required>
                             </div>
