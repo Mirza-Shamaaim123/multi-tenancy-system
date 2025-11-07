@@ -135,7 +135,10 @@ class CheckoutController extends Controller
                         ? now()->addMonth()
                         : now()->addYear();
 
-                    $checkout->update(['expiry_date' => $expiryDate]);
+                    $checkout->start_date = now(); // 👈 Plan start hone ka exact time
+                    $checkout->expiry_date = $expiryDate;
+                    $checkout->save();
+
 
                     // 2️⃣ Immediately purchase confirmation mail
                     Mail::to($checkout->email)->send(new PlanPurchasedMail($checkout));
