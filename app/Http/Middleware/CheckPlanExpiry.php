@@ -24,7 +24,7 @@ class CheckPlanExpiry
             // Agar current date expiry_date se aage nikal gayi
             if (now()->greaterThan($tenant->plan_end_date)) {
                 // User ka plan expire ho gaya
-                return response('subscription_expired');
+                return response()->view('plan_expired');
                 // OR redirect karna chaho to:
                 // return redirect()->route('subscription.expired');
             }
