@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
          $middleware->alias([
         'admin' => \App\Http\Middleware\AdminOnly::class,
         'expiry' => \App\Http\Middleware\CheckPlanExpiry::class,
+        'success' => \App\Http\Middleware\VerifyPaymentSuccess::class
     ]);
         
     })

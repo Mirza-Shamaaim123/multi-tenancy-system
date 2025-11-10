@@ -113,63 +113,67 @@ class CheckoutController extends Controller
     {
         $session_id = $request->query('session_id');
 
-        if ($session_id) {
-            \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
-
-            // Stripe Session fetch karo
-            $session = \Stripe\Checkout\Session::retrieve($session_id);
-
-            // PaymentIntent fetch karo
-            $paymentIntent = \Stripe\PaymentIntent::retrieve($session->payment_intent);
-
-            // PaymentIntent ka status lo (e.g. "succeeded", "canceled", etc.)
-            $status = $paymentIntent->status;
-
-            // Checkout record find karo
-            $checkout = Checkout::find($session->metadata->checkout_id ?? null);
-
-            if ($checkout) {
-                // Database me status update karo
-                $checkout->update(['status' => $status]);
-
-                // ✅ Payment success hone par email bhejna
-                if ($status === 'succeeded') {
-
-                    // 1️⃣ Plan expire date set karo based on plan_type
-                    $expiryDate = $checkout->plan_type === 'Monthly'
-                        ? now()->addMonth()
-                        : now()->addYear();
-
-                    $checkout->start_date = now(); // 👈 Plan start hone ka exact time
-                    $checkout->expiry_date = $expiryDate;
-                    $checkout->save();
-
-                    // ✅ Tenant (store) create karo after payment success
-                    $this->createTenantForCheckout($checkout);
-
-
-
-                    // 2️⃣ Immediately purchase confirmation mail
-                    Mail::to($checkout->email)->send(new PlanPurchasedMail($checkout));
-
-                    // 3️⃣ 1 week baad mail bhejo
-                    Mail::to($checkout->email)->later(
-                        now()->addWeek(),
-                        new PlanPurchasedMail($checkout)
-                    );
-
-                    // 4️⃣ Plan khatam hone se 3 din pehle mail bhejo
-                    $reminderDate = $expiryDate->copy()->subDays(3);
-                    Mail::to($checkout->email)->later(
-                        $reminderDate,
-                        new PlanPurchasedMail($checkout)
-                    );
-                }
-            }
+        // ⚠️ Agar session_id missing ho to direct block karo
+        if (!$session_id) {
+            abort(403, 'Unauthorized access.');
         }
 
-        return view('success', ['status' => $status ?? 'unknown']);
+        \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+
+        try {
+            // 🔹 Stripe Session fetch karo
+            $session = \Stripe\Checkout\Session::retrieve($session_id);
+
+            // 🔹 PaymentIntent fetch karo
+            $paymentIntent = \Stripe\PaymentIntent::retrieve($session->payment_intent);
+            $status = $paymentIntent->status; // e.g. "succeeded", "canceled"
+
+            // 🔹 Checkout record find karo
+            $checkout = Checkout::find($session->metadata->checkout_id ?? null);
+
+            // ❌ Agar record hi nahi mila
+            if (!$checkout) {
+                abort(403, 'Invalid checkout session.');
+            }
+
+            // 🔹 Database update karo
+            $checkout->update(['status' => $status]);
+
+            // ✅ Sirf succeeded payment pe ye sab chale
+            if ($status === 'succeeded') {
+
+                // 🕓 Plan dates set karo
+                $expiryDate = $checkout->plan_type === 'Monthly'
+                    ? now()->addMonth()
+                    : now()->addYear();
+
+                $checkout->update([
+                    'start_date' => now(),
+                    'expiry_date' => $expiryDate,
+                ]);
+
+                // 🧱 Tenant create karo
+                $this->createTenantForCheckout($checkout);
+
+                // 📧 Confirmation email bhejna
+                Mail::to($checkout->email)->send(new PlanPurchasedMail($checkout));
+
+                // 📆 Scheduled reminder emails
+                Mail::to($checkout->email)->later(now()->addWeek(), new PlanPurchasedMail($checkout));
+                Mail::to($checkout->email)->later($expiryDate->copy()->subDays(3), new PlanPurchasedMail($checkout));
+
+                // ✅ Only now show success page
+                return view('success', ['status' => 'succeeded', 'checkout' => $checkout]);
+            }
+
+            // ❌ Agar payment cancel / failed ho
+            abort(403, 'Payment not verified.');
+        } catch (\Exception $e) {
+            // ⚠️ Stripe ya API error
+            abort(403, 'Invalid or expired payment session.');
+        }
     }
+
 
 
 
@@ -256,17 +260,16 @@ class CheckoutController extends Controller
         $tenant->domains()->create([
             'domain' => "{$checkout->domain}.localhost", // e.g. mystore.localhost
         ]);
-         $tenant->run(function () use ($checkout) {
-        \App\Models\User::create([
-            'name'     => $checkout->name,
-            'email'    => $checkout->email,
-            'password' => bcrypt('12345678'),
-            'role'     => 'admin', // agar role column hai to
-        ]);
-    });
+        $tenant->run(function () use ($checkout) {
+            \App\Models\User::create([
+                'name'     => $checkout->name,
+                'email'    => $checkout->email,
+                'password' => bcrypt('12345678'),
+                'role'     => 'admin', // agar role column hai to
+            ]);
+        });
 
-    // Optional redirect agar zarurat ho:
-    // return redirect("http://{$checkout->domain}.localhost:8000")->with('success', 'Your store has been created!');
-}
-
+        // Optional redirect agar zarurat ho:
+        // return redirect("http://{$checkout->domain}.localhost:8000")->with('success', 'Your store has been created!');
+    }
 }
