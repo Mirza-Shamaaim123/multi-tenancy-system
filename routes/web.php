@@ -9,6 +9,7 @@ use App\Models\Warehouse;
 use Illuminate\Support\Facades\Route;
 use App\Models\Plan;
 use App\Http\Controllers\StripeController;
+  use App\Http\Controllers\StripeWebhookController;
    use Illuminate\Support\Facades\Mail;
 use App\Mail\PlanPurchasedMail;
 
@@ -25,27 +26,6 @@ use App\Mail\PlanPurchasedMail;
 
 foreach (config('tenancy.central_domains') as $domain) {
     Route::domain($domain)->group(function () {
-
-
-     
-
-// Route::get('/test-mail', function () {
-//     $checkout = (object)[
-//         'name' => 'Test User',
-//         'email' => 'test@example.com',
-//         'domain' => 'demo.test',
-//         'plan_name' => 'Premium',
-//         'plan_type' => 'Monthly',
-//         'amount' => 29,
-//         'status' => 'succeeded'
-//     ];
-
-//     Mail::to('test@example.com')->send(new PlanPurchasedMail($checkout));
-
-//     return "✅ Mail sent! Check your Mailtrap inbox.";
-// });
-
-
         Route::get('/', function () {
             return view('admin.welcome');
         })->name('home');
@@ -70,6 +50,10 @@ foreach (config('tenancy.central_domains') as $domain) {
 
             return view('contact');
         })->name('contact');
+      
+
+Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook']);
+
 
         Route::get('/dashboard', function () {
             return view('dashboard');
