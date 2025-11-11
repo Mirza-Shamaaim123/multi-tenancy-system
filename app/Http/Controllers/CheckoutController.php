@@ -46,6 +46,7 @@ class CheckoutController extends Controller
             'plan_name' => 'required|string',
             'plan_type' => 'required|string',
             'amount' => 'required|numeric',
+            'store_name' => 'required|string',
         ]);
 
         $checkout = Checkout::create([
@@ -56,6 +57,7 @@ class CheckoutController extends Controller
             'plan_name' => $validated['plan_name'],
             'plan_type' => $validated['plan_type'],
             'amount' => $validated['amount'],
+            'store_name' => $validated['store_name'],
             'status' => 'pending',
         ]);
         if ($validated['payment_method'] === 'stripe') {
@@ -152,8 +154,15 @@ class CheckoutController extends Controller
                     'expiry_date' => $expiryDate,
                 ]);
 
-                // 🧱 Tenant create karo
-                $this->createTenantForCheckout($checkout);
+                // 🧱 Tenant create ya update karo
+                $tenant = $this->createTenantForCheckout($checkout);
+
+                // 🔹 Tenant status aur plan dates update
+                if ($tenant) {
+                     $checkout->update(['status' => $status]);
+                    
+                    $tenant->save();
+                }
 
                 // 📧 Confirmation email bhejna
                 Mail::to($checkout->email)->send(new PlanPurchasedMail($checkout));
@@ -163,7 +172,7 @@ class CheckoutController extends Controller
                 Mail::to($checkout->email)->later($expiryDate->copy()->subDays(3), new PlanPurchasedMail($checkout));
 
                 // ✅ Only now show success page
-                return view('success', ['status' => 'succeeded', 'checkout' => $checkout]);
+                return view('success', ['status' => 'succeeded', 'checkout' => $checkout, 'tenant' => $tenant]);
             }
 
             // ❌ Agar payment cancel / failed ho
@@ -173,6 +182,7 @@ class CheckoutController extends Controller
             abort(403, 'Invalid or expired payment session.');
         }
     }
+
 
 
 

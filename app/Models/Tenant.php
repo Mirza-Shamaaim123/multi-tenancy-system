@@ -19,7 +19,8 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             'password',
             'warehouse_id',
             'plan_start_date',
-            'plan_end_date'
+            'plan_end_date',
+            'status',
         ];
     }
 public function warehouse()

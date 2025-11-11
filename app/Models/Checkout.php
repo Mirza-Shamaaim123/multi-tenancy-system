@@ -12,6 +12,7 @@ class Checkout extends Model
          'name',
         'email',
         'domain',
+        'store_name',
         'payment_method',
         'status',
         'plan_name',

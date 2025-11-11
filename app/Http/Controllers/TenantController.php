@@ -52,6 +52,7 @@ class TenantController extends Controller
             'email' => $validatedData['email'],
             'password' => bcrypt($validatedData['password']),
             'warehouse_id' => $validatedData['warehouse_id'] ?? null,
+            'status' => 'pending',
         ]);
 
         // ✅ Domain create separately
