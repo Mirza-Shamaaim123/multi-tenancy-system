@@ -46,10 +46,11 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::get('/checkout/stripe/{id}', [CheckoutController::class, 'stripeCheckout'])->name('checkout.stripe');
         Route::get('/success', [CheckoutController::class, 'success'])->name('checkout.success');
         Route::get('/cancel', [CheckoutController::class, 'cancel'])->name('checkout.cancel');
+        
 
 
 
-        Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook']);
+        // Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook']);
 
 
         Route::get('/contact', function () {

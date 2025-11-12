@@ -20,6 +20,9 @@ class Checkout extends Model
         'expiry_date',
         'start_date',
         'amount',
+        'stripe_customer_id',
+        'stripe_subscription_id',
+        'stripe_price_id',
     ];
     public function tenant()
 {

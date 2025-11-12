@@ -35,7 +35,7 @@
           </ul>
 
           <div class="mt-6 flex flex-col sm:flex-row sm:items-center gap-3">
-            <a href="{{ route('plan') }}" class="inline-flex items-center justify-center px-5 py-3 rounded-md bg-emerald-500 hover:bg-emerald-600 text-black font-semibold shadow">Renew Plan</a>
+            <a href="{{ route('plan')}}" class="inline-flex items-center justify-center px-5 py-3 rounded-md bg-emerald-500 hover:bg-emerald-600 text-black font-semibold shadow">Renew Plan</a>
             <a href="#" class="inline-flex items-center justify-center px-5 py-3 rounded-md border border-white/10 text-white">Contact Support</a>
             <a href="#" class="inline-flex items-center justify-center px-4 py-2 rounded-md text-sm text-gray-300 hover:text-white">Logout</a>
           </div>

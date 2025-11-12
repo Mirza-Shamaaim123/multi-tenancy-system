@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\PlanPurchasedMail;
 use App\Models\Checkout;
+use App\Models\Plan;
 use App\Models\Tenant as ModelsTenant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -74,63 +75,57 @@ class CheckoutController extends Controller
     }
 
 
-    // public function stripeCheckout($id)
-    // {
-    //     $checkout = Checkout::findOrFail($id);
 
-    //     //    Stripe::setApiKey(config('services.stripe.secret'));
-    //     \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
-
-
-    //     $session = \Stripe\Checkout\Session::create([
-    //         'payment_method_types' => ['card'],
-    //         'line_items' => [[
-    //             'price_data' => [
-    //                 'currency' => 'usd',
-    //                 'product_data' => [
-    //                     'name' => $checkout->domain . ' Plan',
-    //                 ],
-    //                 'unit_amount' => 2900, // $29.00 in cents
-    //             ],
-    //             'quantity' => 1,
-    //         ]],
-    //         'mode' => 'payment',
-
-    //         // 👇 checkout_id ko metadata me store kar rahe hain
-    //         'metadata' => [
-    //             'checkout_id' => $checkout->id,
-    //         ],
-
-    //         // 👇 Stripe yahan {CHECKOUT_SESSION_ID} ko replace karega actual session id se
-    //         'success_url' => url('/success?session_id={CHECKOUT_SESSION_ID}'),
-    //         'cancel_url' => url('/cancel'),
-    //     ]);
-    //     //  Mail::to($checkout->email)->send(new PlanPurchasedMail($checkout));
-
-    //     return redirect($session->url);
-    // }
     public function stripeCheckout($id)
     {
         $checkout = Checkout::findOrFail($id);
 
         \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
-        // 💡 Assume $checkout->amount = 29 / 89 / 99 etc.
+        // 🔹 Determine billing interval (month/year)
+        $interval = match (strtolower($checkout->plan_type)) {
+            'monthly' => 'month',
+            'yearly' => 'year',
+            default => 'month',
+        };
+
+        // 🔹 Step 1: Try to find existing product by name
+        $productName = $checkout->name . ' Plan';
+
+        $existingProducts = \Stripe\Product::search([
+            'query' => 'name:"' . $productName . '"',
+        ]);
+
+        if (count($existingProducts->data) > 0) {
+            $product = $existingProducts->data[0]; // Use existing product
+        } else {
+            // 🔹 Step 2: Create a new product if not found
+            $product = \Stripe\Product::create([
+                'name' => $productName,
+                'description' => ucfirst($checkout->plan_type) . ' subscription for ' . $checkout->domain,
+            ]);
+        }
+
+        // 🔹 Step 3: Create a recurring price for this product
+        $price = \Stripe\Price::create([
+            'unit_amount' => $checkout->amount * 100, // amount in cents
+            'currency' => $checkout->currency ?? 'usd',
+            'recurring' => ['interval' => $interval],
+            'product' => $product->id,
+        ]);
+
+        // 🔹 Step 4: Create a checkout session for subscription
         $session = \Stripe\Checkout\Session::create([
             'payment_method_types' => ['card'],
             'line_items' => [[
-                'price_data' => [
-                    'currency' => $checkout->currency ?? 'usd',
-                    'product_data' => [
-                        'name' => $checkout->domain . ' Plan',
-                    ],
-                    'unit_amount' => $checkout->amount * 100, // 💰 dynamic
-                ],
+                'price' => $price->id,
                 'quantity' => 1,
             ]],
-            'mode' => 'payment',
+            'mode' => 'subscription',
             'metadata' => [
                 'checkout_id' => $checkout->id,
+                'product_id' => $product->id,
+                'price_id' => $price->id,
             ],
             'success_url' => url('/success?session_id={CHECKOUT_SESSION_ID}'),
             'cancel_url' => url('/cancel'),
@@ -139,15 +134,10 @@ class CheckoutController extends Controller
         return redirect($session->url);
     }
 
-
-
-   
-
     public function success(Request $request)
     {
         $session_id = $request->query('session_id');
 
-        // ⚠️ Agar session_id missing ho to block karo
         if (!$session_id) {
             abort(403, 'Invalid payment session (missing ID).');
         }
@@ -158,14 +148,29 @@ class CheckoutController extends Controller
             // 🔹 Stripe session fetch
             $session = \Stripe\Checkout\Session::retrieve($session_id);
 
-            // 🔹 PaymentIntent safe check
-            $paymentIntentId = $session->payment_intent ?? null;
-            if (!$paymentIntentId) {
-                abort(403, 'Invalid payment session (no payment intent found).');
-            }
+            // 🔹 Determine if subscription or one-time
+            if ($session->mode === 'subscription') {
+                // Subscription mode
+                $subscriptionId = $session->subscription;
+                if (!$subscriptionId) {
+                    abort(403, 'Invalid subscription session (no subscription found).');
+                }
 
-            $paymentIntent = \Stripe\PaymentIntent::retrieve($paymentIntentId);
-            $status = $paymentIntent->status; // e.g. "succeeded", "canceled"
+                $subscription = \Stripe\Subscription::retrieve($subscriptionId);
+                $status = $subscription->status; // 'active', 'incomplete', etc.
+
+                $customerId = $subscription->customer;
+            } else {
+                // One-time payment
+                $paymentIntentId = $session->payment_intent ?? null;
+                if (!$paymentIntentId) {
+                    abort(403, 'Invalid payment session (no payment intent found).');
+                }
+
+                $paymentIntent = \Stripe\PaymentIntent::retrieve($paymentIntentId);
+                $status = $paymentIntent->status;
+                $customerId = $paymentIntent->customer;
+            }
 
             // 🔹 Checkout record from metadata
             $checkoutId = $session->metadata->checkout_id ?? null;
@@ -181,7 +186,7 @@ class CheckoutController extends Controller
             // 🔹 Update checkout status
             $checkout->update(['status' => $status]);
 
-            if ($status === 'succeeded') {
+            if (in_array($status, ['succeeded', 'active'])) {
                 // 🕓 Set plan expiry based on plan type
                 $expiryDate = $checkout->plan_type === 'Monthly'
                     ? now()->addMonth()
@@ -190,50 +195,33 @@ class CheckoutController extends Controller
                 $checkout->update([
                     'start_date' => now(),
                     'expiry_date' => $expiryDate,
+                    'stripe_customer_id' => $customerId,
+                    'stripe_subscription_id' => $subscriptionId,
+                    'stripe_price_id' => $checkout->stripe_price_id,
+
                 ]);
 
-                // 🧱 Tenant create
-               $tenant =   $this->createTenantForCheckout($checkout);
+                // 🧱 Tenant create or update
+                $tenant = $this->createTenantForCheckout($checkout);
 
-           
-                
-
-                // 🔹 Tenant status and plan dates update
                 if ($tenant) {
-                    $tenant->update(['status' => 'active']);
-
-                    $tenant->save();
+                    $tenant->update([
+                        'status' => 'active',
+                        'plan_start_date' => now(),
+                        'plan_end_date' => $expiryDate,
+                    ]);
                 }
-                // 📧 Confirmation mail
-                // Mail::to($checkout->email)->send(new PlanPurchasedMail($checkout));
 
-                // // 📆 Reminder mails
-                // Mail::to($checkout->email)->later(now()->addWeek(), new PlanPurchasedMail($checkout));
-                // Mail::to($checkout->email)->later($expiryDate->copy()->subDays(3), new PlanPurchasedMail($checkout));
-
-                // ✅ Return success page
                 return view('success', ['status' => 'succeeded', 'checkout' => $checkout]);
             }
 
-            // ❌ If payment failed/cancelled
             abort(403, 'Payment not verified or canceled.');
         } catch (\Stripe\Exception\InvalidRequestException $e) {
-            // ❌ Stripe session not found (wrong key or expired session)
             abort(403, 'Invalid or expired Stripe session: ' . $e->getMessage());
         } catch (\Exception $e) {
-            // ❌ General error
             abort(403, 'Error validating payment: ' . $e->getMessage());
         }
     }
-
-
-
-
-
-
-
-
-
 
 
     public function cancel(Request $request)
