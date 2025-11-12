@@ -74,77 +74,115 @@ class CheckoutController extends Controller
     }
 
 
+    // public function stripeCheckout($id)
+    // {
+    //     $checkout = Checkout::findOrFail($id);
+
+    //     //    Stripe::setApiKey(config('services.stripe.secret'));
+    //     \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+
+
+    //     $session = \Stripe\Checkout\Session::create([
+    //         'payment_method_types' => ['card'],
+    //         'line_items' => [[
+    //             'price_data' => [
+    //                 'currency' => 'usd',
+    //                 'product_data' => [
+    //                     'name' => $checkout->domain . ' Plan',
+    //                 ],
+    //                 'unit_amount' => 2900, // $29.00 in cents
+    //             ],
+    //             'quantity' => 1,
+    //         ]],
+    //         'mode' => 'payment',
+
+    //         // 👇 checkout_id ko metadata me store kar rahe hain
+    //         'metadata' => [
+    //             'checkout_id' => $checkout->id,
+    //         ],
+
+    //         // 👇 Stripe yahan {CHECKOUT_SESSION_ID} ko replace karega actual session id se
+    //         'success_url' => url('/success?session_id={CHECKOUT_SESSION_ID}'),
+    //         'cancel_url' => url('/cancel'),
+    //     ]);
+    //     //  Mail::to($checkout->email)->send(new PlanPurchasedMail($checkout));
+
+    //     return redirect($session->url);
+    // }
     public function stripeCheckout($id)
     {
         $checkout = Checkout::findOrFail($id);
 
-        //    Stripe::setApiKey(config('services.stripe.secret'));
         \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
-
+        // 💡 Assume $checkout->amount = 29 / 89 / 99 etc.
         $session = \Stripe\Checkout\Session::create([
             'payment_method_types' => ['card'],
             'line_items' => [[
                 'price_data' => [
-                    'currency' => 'usd',
+                    'currency' => $checkout->currency ?? 'usd',
                     'product_data' => [
                         'name' => $checkout->domain . ' Plan',
                     ],
-                    'unit_amount' => 2900, // $29.00 in cents
+                    'unit_amount' => $checkout->amount * 100, // 💰 dynamic
                 ],
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-
-            // 👇 checkout_id ko metadata me store kar rahe hain
             'metadata' => [
                 'checkout_id' => $checkout->id,
             ],
-
-            // 👇 Stripe yahan {CHECKOUT_SESSION_ID} ko replace karega actual session id se
             'success_url' => url('/success?session_id={CHECKOUT_SESSION_ID}'),
             'cancel_url' => url('/cancel'),
         ]);
-        //  Mail::to($checkout->email)->send(new PlanPurchasedMail($checkout));
 
         return redirect($session->url);
     }
 
 
+
+   
+
     public function success(Request $request)
     {
         $session_id = $request->query('session_id');
 
-        // ⚠️ Agar session_id missing ho to direct block karo
+        // ⚠️ Agar session_id missing ho to block karo
         if (!$session_id) {
-            abort(403, 'Unauthorized access.');
+            abort(403, 'Invalid payment session (missing ID).');
         }
 
         \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
         try {
-            // 🔹 Stripe Session fetch karo
+            // 🔹 Stripe session fetch
             $session = \Stripe\Checkout\Session::retrieve($session_id);
 
-            // 🔹 PaymentIntent fetch karo
-            $paymentIntent = \Stripe\PaymentIntent::retrieve($session->payment_intent);
-            $status = $paymentIntent->status; // e.g. "succeeded", "canceled"
-
-            // 🔹 Checkout record find karo
-            $checkout = Checkout::find($session->metadata->checkout_id ?? null);
-
-            // ❌ Agar record hi nahi mila
-            if (!$checkout) {
-                abort(403, 'Invalid checkout session.');
+            // 🔹 PaymentIntent safe check
+            $paymentIntentId = $session->payment_intent ?? null;
+            if (!$paymentIntentId) {
+                abort(403, 'Invalid payment session (no payment intent found).');
             }
 
-            // 🔹 Database update karo
+            $paymentIntent = \Stripe\PaymentIntent::retrieve($paymentIntentId);
+            $status = $paymentIntent->status; // e.g. "succeeded", "canceled"
+
+            // 🔹 Checkout record from metadata
+            $checkoutId = $session->metadata->checkout_id ?? null;
+            if (!$checkoutId) {
+                abort(403, 'Invalid checkout metadata.');
+            }
+
+            $checkout = Checkout::find($checkoutId);
+            if (!$checkout) {
+                abort(403, 'Checkout record not found.');
+            }
+
+            // 🔹 Update checkout status
             $checkout->update(['status' => $status]);
 
-            // ✅ Sirf succeeded payment pe ye sab chale
             if ($status === 'succeeded') {
-
-                // 🕓 Plan dates set karo
+                // 🕓 Set plan expiry based on plan type
                 $expiryDate = $checkout->plan_type === 'Monthly'
                     ? now()->addMonth()
                     : now()->addYear();
@@ -154,34 +192,43 @@ class CheckoutController extends Controller
                     'expiry_date' => $expiryDate,
                 ]);
 
-                // 🧱 Tenant create ya update karo
-                $tenant = $this->createTenantForCheckout($checkout);
+                // 🧱 Tenant create
+               $tenant =   $this->createTenantForCheckout($checkout);
 
-                // 🔹 Tenant status aur plan dates update
+           
+                
+
+                // 🔹 Tenant status and plan dates update
                 if ($tenant) {
-                     $checkout->update(['status' => $status]);
-                    
+                    $tenant->update(['status' => 'active']);
+
                     $tenant->save();
                 }
+                // 📧 Confirmation mail
+                // Mail::to($checkout->email)->send(new PlanPurchasedMail($checkout));
 
-                // 📧 Confirmation email bhejna
-                Mail::to($checkout->email)->send(new PlanPurchasedMail($checkout));
+                // // 📆 Reminder mails
+                // Mail::to($checkout->email)->later(now()->addWeek(), new PlanPurchasedMail($checkout));
+                // Mail::to($checkout->email)->later($expiryDate->copy()->subDays(3), new PlanPurchasedMail($checkout));
 
-                // 📆 Scheduled reminder emails
-                Mail::to($checkout->email)->later(now()->addWeek(), new PlanPurchasedMail($checkout));
-                Mail::to($checkout->email)->later($expiryDate->copy()->subDays(3), new PlanPurchasedMail($checkout));
-
-                // ✅ Only now show success page
-                return view('success', ['status' => 'succeeded', 'checkout' => $checkout, 'tenant' => $tenant]);
+                // ✅ Return success page
+                return view('success', ['status' => 'succeeded', 'checkout' => $checkout]);
             }
 
-            // ❌ Agar payment cancel / failed ho
-            abort(403, 'Payment not verified.');
+            // ❌ If payment failed/cancelled
+            abort(403, 'Payment not verified or canceled.');
+        } catch (\Stripe\Exception\InvalidRequestException $e) {
+            // ❌ Stripe session not found (wrong key or expired session)
+            abort(403, 'Invalid or expired Stripe session: ' . $e->getMessage());
         } catch (\Exception $e) {
-            // ⚠️ Stripe ya API error
-            abort(403, 'Invalid or expired payment session.');
+            // ❌ General error
+            abort(403, 'Error validating payment: ' . $e->getMessage());
         }
     }
+
+
+
+
 
 
 

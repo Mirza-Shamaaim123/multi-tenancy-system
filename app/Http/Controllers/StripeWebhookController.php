@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Stripe\Stripe;
 use Stripe\Webhook;
+use App\Models\Tenant;
 
 class StripeWebhookController extends Controller
 {
@@ -12,27 +13,63 @@ class StripeWebhookController extends Controller
     {
         $payload = $request->getContent();
         $sigHeader = $request->header('Stripe-Signature');
-        $endpointSecret = env('STRIPE_WEBHOOK_SECRET'); // ye secret Stripe dashboard se milega
+        $endpointSecret = env('STRIPE_WEBHOOK_SECRET');
 
         try {
-            $event = Webhook::constructEvent(
-                $payload, $sigHeader, $endpointSecret
-            );
-        } catch(\Exception $e) {
+            $event = Webhook::constructEvent($payload, $sigHeader, $endpointSecret);
+        } catch (\Exception $e) {
             return response('Webhook signature verification failed.', 400);
         }
 
-        // Event handling
         switch ($event->type) {
+
+            // ✅ Checkout payment completed
             case 'checkout.session.completed':
                 $session = $event->data->object;
-                // Payment success logic yahan likhe
+
+                $tenant = Tenant::where('email', $session->customer_email)->first();
+                if ($tenant) {
+                    $tenant->status = 'active';
+                    $tenant->plan_start_date = now();
+                    if ($tenant->plan_type === 'Monthly') {
+                        $tenant->plan_end_date = now()->addMonth();
+                    } elseif ($tenant->plan_type === 'Yearly') {
+                        $tenant->plan_end_date = now()->addYear();
+                    }
+                    $tenant->save();
+                }
                 break;
+
+            // ✅ Subscription payment success (renewal)
             case 'invoice.payment_succeeded':
-                // Subscription payment success logic
+                $customerId = $event->data->object->customer;
+                $tenant = Tenant::where('stripe_customer_id', $customerId)->first();
+                if ($tenant) {
+                    $tenant->status = 'active';
+                    $tenant->plan_start_date = now();
+                      if ($tenant->plan_type === 'Monthly') {
+                        $tenant->plan_end_date = now()->addMonth();
+                    } elseif ($tenant->plan_type === 'Yearly') {
+                        $tenant->plan_end_date = now()->addYear();
+                    }
+                    $tenant->save();
+                }
                 break;
-            case 'customer.subscription.updated':
-                // Subscription updated logic
+
+            // ✅ Subscription cancelled or deleted
+            case 'customer.subscription.deleted':
+                $customerId = $event->data->object->customer;
+                $tenant = Tenant::where('stripe_customer_id', $customerId)->first();
+                if ($tenant) {
+                    $tenant->status = 'inactive';
+                    $tenant->plan_end_date = now();
+                      if ($tenant->plan_type === 'Monthly') {
+                        $tenant->plan_end_date = now()->addMonth();
+                    } elseif ($tenant->plan_type === 'Yearly') {
+                        $tenant->plan_end_date = now()->addYear();
+                    }
+                    $tenant->save();
+                }
                 break;
         }
 

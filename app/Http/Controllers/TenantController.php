@@ -44,6 +44,7 @@ class TenantController extends Controller
             'domain_name' => 'required|string|max:255|unique:domains,domain',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'warehouse_id' => 'nullable|exists:warehouses,id',
+            'status' => 'nullable',
         ]);
 
         // ✅ Tenant create with specific fields
@@ -52,7 +53,7 @@ class TenantController extends Controller
             'email' => $validatedData['email'],
             'password' => bcrypt($validatedData['password']),
             'warehouse_id' => $validatedData['warehouse_id'] ?? null,
-            'status' => 'pending',
+            'status' => $validatedData['status'] ?? 'active'    ,
         ]);
 
         // ✅ Domain create separately

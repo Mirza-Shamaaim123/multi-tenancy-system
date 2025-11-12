@@ -9,9 +9,10 @@ use App\Models\Warehouse;
 use Illuminate\Support\Facades\Route;
 use App\Models\Plan;
 use App\Http\Controllers\StripeController;
-  use App\Http\Controllers\StripeWebhookController;
-   use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\StripeWebhookController;
+use Illuminate\Support\Facades\Mail;
 use App\Mail\PlanPurchasedMail;
+
 
 
 
@@ -46,13 +47,18 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::get('/success', [CheckoutController::class, 'success'])->name('checkout.success');
         Route::get('/cancel', [CheckoutController::class, 'cancel'])->name('checkout.cancel');
 
-        Route::get('/contact',function(){
+
+
+        Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook']);
+
+
+        Route::get('/contact', function () {
 
             return view('contact');
         })->name('contact');
-      
 
-Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook']);
+
+        Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook']);
 
 
         Route::get('/dashboard', function () {

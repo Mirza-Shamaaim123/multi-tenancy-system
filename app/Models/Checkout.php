@@ -21,4 +21,8 @@ class Checkout extends Model
         'start_date',
         'amount',
     ];
+    public function tenant()
+{
+    return $this->hasOne(Tenant::class);
+}
 }
