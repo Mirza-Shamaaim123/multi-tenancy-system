@@ -339,7 +339,7 @@
 								<div class="d-flex align-items-center justify-content-between border-bottom">
 									<div class="d-flex align-items-center">
 										<a href="javascript:void(0);" class="avatar avatar-lg">
-											<img src="{{ asset('assets/img/products/product-01.jpg') }}" alt="img">
+											<img src="{{ global_asset('assets/img/products/product-01.jpg') }}" alt="img">
 										</a>
 										<div class="ms-2">
 											<h6 class="fw-bold mb-1"><a href="javascript:void(0);">Charger Cable - Lighting</a></h6>
@@ -354,7 +354,7 @@
 								<div class="d-flex align-items-center justify-content-between border-bottom">
 									<div class="d-flex align-items-center">
 										<a href="javascript:void(0);" class="avatar avatar-lg">
-											<img src="{{ asset('assets/img/products/product-16.jpg') }}" alt="img">
+											<img src="{{ global_asset('assets/img/products/product-16.jpg') }}" alt="img">
 										</a>
 										<div class="ms-2">
 											<h6 class="fw-bold mb-1"><a href="javascript:void(0);">Yves Saint Eau De Parfum</a></h6>
@@ -369,7 +369,7 @@
 								<div class="d-flex align-items-center justify-content-between border-bottom">
 									<div class="d-flex align-items-center">
 										<a href="javascript:void(0);" class="avatar avatar-lg">
-											<img src="{{ asset('assets/img/products/product-03.jpg') }}" alt="img">
+											<img src="{{ global_asset('assets/img/products/product-03.jpg') }}" alt="img">
 										</a>
 										<div class="ms-2">
 											<h6 class="fw-bold mb-1"><a href="javascript:void(0);">Apple Airpods 2</a></h6>
@@ -384,7 +384,7 @@
 								<div class="d-flex align-items-center justify-content-between border-bottom">
 									<div class="d-flex align-items-center">
 										<a href="javascript:void(0);" class="avatar avatar-lg">
-											<img src="{{ asset('assets/img/products/product-04.jpg') }}" alt="img">
+											<img src="{{ global_asset('assets/img/products/product-04.jpg') }}" alt="img">
 										</a>
 										<div class="ms-2">
 											<h6 class="fw-bold mb-1"><a href="javascript:void(0);">Vacuum Cleaner</a></h6>
@@ -399,7 +399,7 @@
 								<div class="d-flex align-items-center justify-content-between">
 									<div class="d-flex align-items-center">
 										<a href="javascript:void(0);" class="avatar avatar-lg">
-											<img src="{{ asset('assets/img/products/product-05.jpg') }}" alt="img">
+											<img src="{{ global_asset('assets/img/products/product-05.jpg') }}" alt="img">
 										</a>
 										<div class="ms-2">
 											<h6 class="fw-bold mb-1"><a href="javascript:void(0);">Samsung Galaxy S21 Fe 5g</a></h6>
@@ -430,7 +430,7 @@
 								<div class="d-flex align-items-center justify-content-between mb-4">
 									<div class="d-flex align-items-center">
 										<a href="javascript:void(0);" class="avatar avatar-lg">
-											<img src="{{ asset('assets/img/products/product-06.jpg') }}" alt="img">
+											<img src="{{ global_asset('assets/img/products/product-06.jpg') }}" alt="img">
 										</a>
 										<div class="ms-2">
 											<h6 class="fw-bold mb-1"><a href="javascript:void(0);">Dell XPS 13</a></h6>
@@ -445,7 +445,7 @@
 								<div class="d-flex align-items-center justify-content-between mb-4">
 									<div class="d-flex align-items-center">
 										<a href="javascript:void(0);" class="avatar avatar-lg">
-											<img src="{{ asset('assets/img/products/product-07.jpg') }}" alt="img">
+											<img src="{{ global_asset('assets/img/products/product-07.jpg') }}" alt="img">
 										</a>
 										<div class="ms-2">
 											<h6 class="fw-bold mb-1"><a href="javascript:void(0);">Vacuum Cleaner Robot</a></h6>
@@ -460,7 +460,7 @@
 								<div class="d-flex align-items-center justify-content-between mb-4">
 									<div class="d-flex align-items-center">
 										<a href="javascript:void(0);" class="avatar avatar-lg">
-											<img src="{{ asset('assets/img/products/product-08.jpg') }}" alt="img">
+											<img src="{{ global_asset('assets/img/products/product-08.jpg') }}" alt="img">
 										</a>
 										<div class="ms-2">
 											<h6 class="fw-bold mb-1"><a href="javascript:void(0);">KitchenAid Stand Mixer</a></h6>
@@ -475,7 +475,7 @@
 								<div class="d-flex align-items-center justify-content-between mb-4">
 									<div class="d-flex align-items-center">
 										<a href="javascript:void(0);" class="avatar avatar-lg">
-											<img src="{{ asset('assets/img/products/product-09.jpg') }}" alt="img">
+											<img src="{{ global_asset('assets/img/products/product-09.jpg') }}" alt="img">
 										</a>
 										<div class="ms-2">
 											<h6 class="fw-bold mb-1"><a href="javascript:void(0);">Levi's Trucker Jacket</a></h6>
@@ -490,7 +490,7 @@
 								<div class="d-flex align-items-center justify-content-between mb-0">
 									<div class="d-flex align-items-center">
 										<a href="javascript:void(0);" class="avatar avatar-lg">
-											<img src="{{ asset('assets/img/products/product-10.jpg') }}" alt="img">
+											<img src="{{ global_asset('assets/img/products/product-10.jpg') }}" alt="img">
 										</a>
 										<div class="ms-2">
 											<h6 class="fw-bold mb-1"><a href="javascript:void(0);">Lay's Classic</a></h6>
@@ -536,7 +536,7 @@
 								<div class="d-flex align-items-center justify-content-between mb-4">
 									<div class="d-flex align-items-center">
 										<a href="javascript:void(0);" class="avatar avatar-lg">
-											<img src="{{ asset('assets/img/products/product-11.jpg') }}" alt="img">
+											<img src="{{ global_asset('assets/img/products/product-11.jpg') }}" alt="img">
 										</a>
 										<div class="ms-2">
 											<h6 class="fw-bold mb-1"><a href="javascript:void(0);">Apple Watch Series 9</a></h6>
@@ -554,7 +554,7 @@
 								<div class="d-flex align-items-center justify-content-between mb-4">
 									<div class="d-flex align-items-center">
 										<a href="javascript:void(0);" class="avatar avatar-lg">
-											<img src="{{ asset('assets/img/products/product-12.jpg') }}" alt="img">
+											<img src="{{ global_asset('assets/img/products/product-12.jpg') }}" alt="img">
 										</a>
 										<div class="ms-2">
 											<h6 class="fw-bold mb-1"><a href="javascript:void(0);">Gold Bracelet</a></h6>
@@ -572,7 +572,7 @@
 								<div class="d-flex align-items-center justify-content-between mb-4">
 									<div class="d-flex align-items-center">
 										<a href="javascript:void(0);" class="avatar avatar-lg">
-											<img src="{{ asset('assets/img/products/product-13.jpg') }}" alt="img">
+											<img src="{{ global_asset('assets/img/products/product-13.jpg') }}" alt="img">
 										</a>
 										<div class="ms-2">
 											<h6 class="fw-bold mb-1"><a href="javascript:void(0);">Parachute Down Duvet</a></h6>
@@ -590,7 +590,7 @@
 								<div class="d-flex align-items-center justify-content-between mb-4">
 									<div class="d-flex align-items-center">
 										<a href="javascript:void(0);" class="avatar avatar-lg">
-											<img src="{{ asset('assets/img/products/product-14.jpg') }}" alt="img">
+											<img src="{{ global_asset('assets/img/products/product-14.jpg') }}" alt="img">
 										</a>
 										<div class="ms-2">
 											<h6 class="fw-bold mb-1"><a href="javascript:void(0);">YETI Rambler Tumbler</a></h6>
@@ -608,7 +608,7 @@
 								<div class="d-flex align-items-center justify-content-between mb-0">
 									<div class="d-flex align-items-center">
 										<a href="javascript:void(0);" class="avatar avatar-lg">
-											<img src="{{ asset('assets/img/products/product-15.jpg') }}" alt="img">
+											<img src="{{ global_asset('assets/img/products/product-15.jpg') }}" alt="img">
 										</a>
 										<div class="ms-2">
 											<h6 class="fw-bold mb-1"><a href="javascript:void(0);">Osmo Genius Starter Kit</a></h6>
@@ -710,7 +710,7 @@
 														<td>
 															<div class="d-flex align-items-center file-name-icon">
 																<a href="javascript:void(0);" class="avatar avatar-md">
-																	<img src="{{ asset('assets/img/customer/customer16.jpg') }}" class="img-fluid" alt="img">
+																	<img src="{{ global_asset('assets/img/customer/customer16.jpg') }}" class="img-fluid" alt="img">
 																</a>
 																<div class="ms-2">
 																	<h6><a href="javascript:void(0);" class="fw-bold">Andrea Willer</a></h6>
@@ -726,7 +726,7 @@
 														<td>
 															<div class="d-flex align-items-center file-name-icon">
 																<a href="javascript:void(0);" class="avatar avatar-md">
-																	<img src="{{ asset('assets/img/customer/customer17.jpg') }}" class="img-fluid" alt="img">
+																	<img src="{{ global_asset('assets/img/customer/customer17.jpg') }}" class="img-fluid" alt="img">
 																</a>
 																<div class="ms-2">
 																	<h6><a href="javascript:void(0);" class="fw-bold">Timothy Sandsr</a></h6>
@@ -742,7 +742,7 @@
 														<td>
 															<div class="d-flex align-items-center file-name-icon">
 																<a href="javascript:void(0);" class="avatar avatar-md">
-																	<img src="{{ asset('assets/img/customer/customer18.jpg') }}" class="img-fluid" alt="img">
+																	<img src="{{ global_asset('assets/img/customer/customer18.jpg') }}" class="img-fluid" alt="img">
 																</a>
 																<div class="ms-2">
 																	<h6><a href="javascript:void(0);" class="fw-bold">Bonnie Rodrigues</a></h6>
@@ -758,7 +758,7 @@
 														<td>
 															<div class="d-flex align-items-center file-name-icon">
 																<a href="javascript:void(0);" class="avatar avatar-md">
-																	<img src="{{ asset('assets/img/customer/customer15.jpg') }}" class="img-fluid" alt="img">
+																	<img src="{{ global_asset('assets/img/customer/customer15.jpg') }}" class="img-fluid" alt="img">
 																</a>
 																<div class="ms-2">
 																	<h6><a href="javascript:void(0);" class="fw-bold">Randy McCree</a></h6>
@@ -774,7 +774,7 @@
 														<td>
 															<div class="d-flex align-items-center file-name-icon">
 																<a href="javascript:void(0);" class="avatar avatar-md">
-																	<img src="{{ asset('assets/img/customer/customer13.jpg') }}" class="img-fluid" alt="img">
+																	<img src="{{ global_asset('assets/img/customer/customer13.jpg') }}" class="img-fluid" alt="img">
 																</a>
 																<div class="ms-2">
 																	<h6><a href="javascript:void(0);" class="fw-bold">Dennis Anderson</a></h6>
@@ -878,7 +878,7 @@
 														<td>
 															<div class="d-flex align-items-center file-name-icon">
 																<a href="javascript:void(0);" class="avatar avatar-md">
-																	<img src="{{ asset('assets/img/customer/customer16.jpg') }}" class="img-fluid" alt="img">
+																	<img src="{{ global_asset('assets/img/customer/customer16.jpg') }}" class="img-fluid" alt="img">
 																</a>
 																<div class="ms-2">
 																	<h6 class="fw-medium"><a href="javascript:void(0);">Andrea Willer</a></h6>
@@ -894,7 +894,7 @@
 														<td>
 															<div class="d-flex align-items-center file-name-icon">
 																<a href="javascript:void(0);" class="avatar avatar-md">
-																	<img src="{{ asset('assets/img/customer/customer17.jpg') }}" class="img-fluid" alt="img">
+																	<img src="{{ global_asset('assets/img/customer/customer17.jpg') }}" class="img-fluid" alt="img">
 																</a>
 																<div class="ms-2">
 																	<h6 class="fw-medium"><a href="javascript:void(0);">Timothy Sandsr</a></h6>
@@ -910,7 +910,7 @@
 														<td>
 															<div class="d-flex align-items-center file-name-icon">
 																<a href="javascript:void(0);" class="avatar avatar-md">
-																	<img src="{{ asset('assets/img/customer/customer18.jpg') }}" class="img-fluid" alt="img">
+																	<img src="{{ global_asset('assets/img/customer/customer18.jpg') }}" class="img-fluid" alt="img">
 																</a>
 																<div class="ms-2">
 																	<h6 class="fw-medium"><a href="javascript:void(0);">Bonnie Rodrigues</a></h6>
@@ -926,7 +926,7 @@
 														<td>
 															<div class="d-flex align-items-center file-name-icon">
 																<a href="javascript:void(0);" class="avatar avatar-md">
-																	<img src="{{ asset('assets/img/customer/customer15.jpg') }}" class="img-fluid" alt="img">
+																	<img src="{{ global_asset('assets/img/customer/customer15.jpg') }}" class="img-fluid" alt="img">
 																</a>
 																<div class="ms-2">
 																	<h6 class="fw-medium"><a href="javascript:void(0);">Randy McCree</a></h6>
@@ -942,7 +942,7 @@
 														<td>
 															<div class="d-flex align-items-center file-name-icon">
 																<a href="javascript:void(0);" class="avatar avatar-md">
-																	<img src="{{ asset('assets/img/customer/customer13.jpg') }}" class="img-fluid" alt="img">
+																	<img src="{{ global_asset('assets/img/customer/customer13.jpg') }}" class="img-fluid" alt="img">
 																</a>
 																<div class="ms-2">
 																	<h6 class="fw-medium"><a href="javascript:void(0);">Dennis Anderson</a></h6>
@@ -1034,7 +1034,7 @@
 														<td>
 															<div class="d-flex align-items-center file-name-icon">
 																<a href="javascript:void(0);" class="avatar avatar-md">
-																	<img src="{{ asset('assets/img/customer/customer16.jpg') }}" class="img-fluid" alt="img">
+																	<img src="{{ global_asset('assets/img/customer/customer16.jpg') }}" class="img-fluid" alt="img">
 																</a>
 																<div class="ms-2">
 																	<h6 class="fw-bold"><a href="javascript:void(0);">Andrea Willer</a></h6>
@@ -1050,7 +1050,7 @@
 														<td>
 															<div class="d-flex align-items-center file-name-icon">
 																<a href="javascript:void(0);" class="avatar avatar-md">
-																	<img src="{{ asset('assets/img/customer/customer17.jpg') }}" class="img-fluid" alt="img">
+																	<img src="{{ global_asset('assets/img/customer/customer17.jpg') }}" class="img-fluid" alt="img">
 																</a>
 																<div class="ms-2">
 																	<h6 class="fw-bold"><a href="javascript:void(0);">Timothy Sandsr</a></h6>
@@ -1066,7 +1066,7 @@
 														<td>
 															<div class="d-flex align-items-center file-name-icon">
 																<a href="javascript:void(0);" class="avatar avatar-md">
-																	<img src="{{ asset('assets/img/customer/customer18.jpg') }}" class="img-fluid" alt="img">
+																	<img src="{{ global_asset('assets/img/customer/customer18.jpg') }}" class="img-fluid" alt="img">
 																</a>
 																<div class="ms-2">
 																	<h6 class="fw-bold"><a href="javascript:void(0);">Bonnie Rodrigues</a></h6>
@@ -1082,7 +1082,7 @@
 														<td>
 															<div class="d-flex align-items-center file-name-icon">
 																<a href="javascript:void(0);" class="avatar avatar-md">
-																	<img src="{{ asset('assets/img/customer/customer15.jpg') }}" class="img-fluid" alt="img">
+																	<img src="{{ global_asset('assets/img/customer/customer15.jpg') }}" class="img-fluid" alt="img">
 																</a>
 																<div class="ms-2">
 																	<h6 class="fw-bold"><a href="javascript:void(0);">Randy McCree</a></h6>
@@ -1098,7 +1098,7 @@
 														<td>
 															<div class="d-flex align-items-center file-name-icon">
 																<a href="javascript:void(0);" class="avatar avatar-md">
-																	<img src="{{ asset('assets/img/customer/customer13.jpg') }}" class="img-fluid" alt="img">
+																	<img src="{{ global_asset('assets/img/customer/customer13.jpg') }}" class="img-fluid" alt="img">
 																</a>
 																<div class="ms-2">
 																	<h6 class="fw-bold"><a href="javascript:void(0);">Dennis Anderson</a></h6>
@@ -1138,7 +1138,7 @@
 								<div class="d-flex align-items-center justify-content-between border-bottom mb-3 pb-3 flex-wrap gap-2">
 									<div class="d-flex align-items-center">
 										<a href="javascript:void(0);" class="avatar avatar-lg flex-shrink-0">
-											<img src="{{ asset('assets/img/customer/customer11.jpg') }}" alt="img">
+											<img src="{{ global_asset('assets/img/customer/customer11.jpg') }}" alt="img">
 										</a>
 										<div class="ms-2">
 											<h6 class="fs-14 fw-bold mb-1"><a href="javascript:void(0);">Carlos Curran</a></h6>
@@ -1155,7 +1155,7 @@
 								<div class="d-flex align-items-center justify-content-between border-bottom mb-3 pb-3 flex-wrap gap-2">
 									<div class="d-flex align-items-center">
 										<a href="javascript:void(0);" class="avatar avatar-lg flex-shrink-0">
-											<img src="{{ asset('assets/img/customer/customer12.jpg') }}" alt="img">
+											<img src="{{ global_asset('assets/img/customer/customer12.jpg') }}" alt="img">
 										</a>
 										<div class="ms-2">
 											<h6 class="fs-14 fw-bold mb-1"><a href="javascript:void(0);">Stan Gaunter</a></h6>
@@ -1172,7 +1172,7 @@
 								<div class="d-flex align-items-center justify-content-between border-bottom mb-3 pb-3 flex-wrap gap-2">
 									<div class="d-flex align-items-center">
 										<a href="javascript:void(0);" class="avatar avatar-lg flex-shrink-0">
-											<img src="{{ asset('assets/img/customer/customer13.jpg') }}" alt="img">
+											<img src="{{ global_asset('assets/img/customer/customer13.jpg') }}" alt="img">
 										</a>
 										<div class="ms-2">
 											<h6 class="fs-14 fw-bold mb-1"><a href="javascript:void(0);">Richard Wilson</a></h6>
@@ -1189,7 +1189,7 @@
 								<div class="d-flex align-items-center justify-content-between border-bottom mb-3 pb-3 flex-wrap gap-2">
 									<div class="d-flex align-items-center">
 										<a href="javascript:void(0);" class="avatar avatar-lg flex-shrink-0">
-											<img src="{{ asset('assets/img/customer/customer14.jpg') }}" alt="img">
+											<img src="{{ global_asset('assets/img/customer/customer14.jpg') }}" alt="img">
 										</a>
 										<div class="ms-2">
 											<h6 class="fs-14 fw-bold mb-1"><a href="javascript:void(0);">Mary Bronson</a></h6>
@@ -1206,7 +1206,7 @@
 								<div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
 									<div class="d-flex align-items-center">
 										<a href="javascript:void(0);" class="avatar avatar-lg flex-shrink-0">
-											<img src="{{ asset('assets/img/customer/customer15.jpg') }}" alt="img">
+											<img src="{{ global_asset('assets/img/customer/customer15.jpg') }}" alt="img">
 										</a>
 										<div class="ms-2">
 											<h6 class="fs-14 fw-bold mb-1"><a href="javascript:void(0);">Annie Tremblay</a></h6>

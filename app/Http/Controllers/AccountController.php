@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
+
 use  Illuminate\Support\Facades\Validator;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class AccountController extends Controller
@@ -48,17 +51,16 @@ class AccountController extends Controller
             'password' => 'required',
         ]);
 
-        if($validator->passes()){
-            if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+        if ($validator->passes()) {
+            if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                 $user = Auth::user();
-                if($user->role=='manager'){
-                     return redirect()->route('manger.dashboard'); 
-                }else if($user->role=='salesman'){
-                    return redirect()->route('saleman.dashboard');    
-                }else{
+                if ($user->role == 'manager') {
+                    return redirect()->route('manger.dashboard');
+                } else if ($user->role == 'salesman') {
+                    return redirect()->route('saleman.dashboard');
+                } else {
                     return redirect()->route('tenant.dashboard');
                 }
-
             }
         }
 
@@ -81,42 +83,48 @@ class AccountController extends Controller
     public function profile()
     {
         $user = Auth::user();
+         
         return view('account.profile', compact('user'));
     }
 
     public function update(Request $request)
     {
+        // dd($request->all());
         $user = Auth::user();
+
+       
+
+        if (!$user) {
+            abort(401, 'Unauthenticated');
+        }
 
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email',
             'password' => 'nullable|min:6',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // 2048 KB = 2 MB
         ]);
 
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->phone_number = $request->phone_number;
-        $user->image = $request->image;
 
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('profile_images', 'public');
-            $user->image = $path;
-        }
-
-
-
-        if ($request->password) {
+        // Update password if entered
+        if (empty($request->password)) {
             $user->password = bcrypt($request->password);
         }
-
+        // dd($request->all());
         $user->save();
 
-        return redirect()->route('account.profile')->with('success', 'Profile updated successfully!');
+
+        // $user->save();
+
+        return redirect()->route('account.profile')
+            ->with('success', 'Profile updated successfully!');
     }
 
-    public function logout(){
+
+
+    public function logout()
+    {
         Auth::logout();
         return redirect()->route('login');
     }

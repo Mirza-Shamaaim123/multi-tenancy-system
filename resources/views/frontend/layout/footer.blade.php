@@ -100,45 +100,45 @@
 
 <!-- jQuery -->
 {{-- <script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}" type="text/javascript"></script> --}}
-<script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
+<script src="{{ global_asset('assets/js/jquery-3.7.1.min.js') }}"></script>
 
 
 
 
 <!-- Bootstrap (jQuery ke baad hi hona chahiye) -->
-<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" type="text/javascript"></script>
+<script src="{{ global_asset('assets/js/bootstrap.bundle.min.js') }}" type="text/javascript"></script>
 
 <!-- Slimscroll -->
-<script src="{{ asset('assets/js/jquery.slimscroll.min.js') }}" type="text/javascript"></script>
+<script src="{{ global_asset('assets/js/jquery.slimscroll.min.js') }}" type="text/javascript"></script>
 
 <!-- Feather Icons -->
-<script src="{{ asset('assets/js/feather.min.js') }}" type="text/javascript"></script>
+<script src="{{ global_asset('assets/js/feather.min.js') }}" type="text/javascript"></script>
 
 <!-- Moment JS -->
-<script src="{{ asset('assets/js/moment.min.js') }}" type="text/javascript"></script>
+<script src="{{ global_asset('assets/js/moment.min.js') }}" type="text/javascript"></script>
 
 <!-- Date Range Picker -->
-<script src="{{ asset('assets/plugins/daterangepicker/daterangepicker.js') }}" type="text/javascript"></script>
+<script src="{{ global_asset('assets/plugins/daterangepicker/daterangepicker.js') }}" type="text/javascript"></script>
 
 <!-- Select2 -->
-<script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}" type="text/javascript"></script>
+<script src="{{ global_asset('assets/plugins/select2/js/select2.min.js') }}" type="text/javascript"></script>
 
 <!-- DataTables (Important: add before script.js) -->
 {{-- <script src="{{ asset('assets/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script> --}}
 
 <!-- ApexCharts -->
-<script src="{{ asset('assets/plugins/apexchart/apexcharts.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/plugins/apexchart/chart-data.js') }}" type="text/javascript"></script>
+<script src="{{ global_asset('assets/plugins/apexchart/apexcharts.min.js') }}" type="text/javascript"></script>
+<script src="{{ global_asset('assets/plugins/apexchart/chart-data.js') }}" type="text/javascript"></script>
 
 <!-- Chart.js -->
-<script src="{{ asset('assets/plugins/chartjs/chart.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/plugins/chartjs/chart-data.js') }}" type="text/javascript"></script>
+<script src="{{ global_asset('assets/plugins/chartjs/chart.min.js') }}" type="text/javascript"></script>
+<script src="{{ global_asset('assets/plugins/chartjs/chart-data.js') }}" type="text/javascript"></script>
 
 <!-- Theme Color Picker -->
-<script src="{{ asset('assets/js/theme-colorpicker.js') }}" type="text/javascript"></script>
+<script src="{{ global_asset('assets/js/theme-colorpicker.js') }}" type="text/javascript"></script>
 
 <!-- Custom Script (Always Last) -->
-<script src="{{ asset('assets/js/script.js') }}" type="text/javascript"></script>
+<script src="{{ global_asset('assets/js/script.js') }}" type="text/javascript"></script>
 
 
 

@@ -18,41 +18,41 @@
     <meta name="robots" content="index, follow">
     <title>Dreams POS - Inventory Management & Admin Dashboard Template</title>
 
-    <script src="{{ asset('assets/js/theme-script.js') }}" type="1c7c51a37a311fed5f477439-text/javascript"></script>
+    <script src="{{ global_asset('assets/js/theme-script.js') }}" type="1c7c51a37a311fed5f477439-text/javascript"></script>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ global_asset('assets/img/favicon.png') }}">
 
     <!-- Apple Touch Icon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/img/apple-touch-icon.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ global_asset('assets/img/apple-touch-icon.png') }}">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ global_asset('assets/css/bootstrap.min.css') }}">
 
     <!-- Datetimepicker CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-datetimepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ global_asset('assets/css/bootstrap-datetimepicker.min.css') }}">
 
     <!-- animation CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
+    <link rel="stylesheet" href="{{ global_asset('assets/css/animate.css') }}">
 
     <!-- Select2 CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ global_asset('assets/plugins/select2/css/select2.min.css') }}">
 
     <!-- Daterangepikcer CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/daterangepicker/daterangepicker.css') }}">
+    <link rel="stylesheet" href="{{ global_asset('assets/plugins/daterangepicker/daterangepicker.css') }}">
 
     <!-- Tabler Icon CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/tabler-icons/tabler-icons.min.css') }}">
+    <link rel="stylesheet" href="{{ global_asset('assets/plugins/tabler-icons/tabler-icons.min.css') }}">
 
     <!-- Fontawesome CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome/css/fontawesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ global_asset('assets/plugins/fontawesome/css/fontawesome.min.css') }}">
+    <link rel="stylesheet" href="{{ global_asset('assets/plugins/fontawesome/css/all.min.css') }}">
     {{-- 
 	<!-- Color Picker Css -->
 	<link rel="stylesheet" href="{{ asset('assets/plugins/%40simonwep/pickr/themes/nano.min.css') }}"> --}}
 
     <!-- Main CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ global_asset('assets/css/style.css') }}">
     {{-- 
     <!-- For Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -97,13 +97,13 @@
                 <!-- Logo -->
                 <div class="header-left active">
                     <a href="index.html" class="logo logo-normal">
-                        <img src="{{ asset('assets/img/logo.svg') }}" alt="Img">
+                        <img src="{{ global_asset('assets/img/logo.svg') }}" alt="Img">
                     </a>
                     <a href="index.html" class="logo logo-white">
-                        <img src="{{ asset('assets/img/logo-white.svg') }}" alt="Img">
+                        <img src="{{ global_asset('assets/img/logo-white.svg') }}" alt="Img">
                     </a>
                     <a href="index.html" class="logo-small">
-                        <img src="{{ asset('assets/img/logo-small.png') }}" alt="Img">
+                        <img src="{{ global_asset('assets/img/logo-small.png') }}" alt="Img">
                     </a>
                 </div>
                 <!-- /Logo -->
@@ -133,7 +133,7 @@
                                     </div>
                                     <span class="input-group-text">
                                         <kbd class="d-flex align-items-center"><img
-                                                src="{{ asset('assets/img/icons/command.svg') }}" alt="img"
+                                                src="{{ global_asset('assets/img/icons/command.svg') }}" alt="img"
                                                 class="me-1">K</kbd>
                                     </span>
                                 </div>
@@ -156,13 +156,13 @@
                                         <h6><span><i data-feather="user" class="feather-16"></i></span>Customers</h6>
                                         <ul class="customers">
                                             <li><a href="javascript:void(0);">Aron Varu<img
-                                                        src="{{ asset('assets/img/profiles/avator1.jpg') }}"
+                                                        src="{{ global_asset('assets/img/profiles/avator1.jpg') }}"
                                                         alt="Img" class="img-fluid"></a></li>
                                             <li><a href="javascript:void(0);">Jonita<img
-                                                        src="{{ asset('assets/img/profiles/avatar-01.jpg') }}"
+                                                        src="{{ global_asset('assets/img/profiles/avatar-01.jpg') }}"
                                                         alt="Img" class="img-fluid"></a></li>
                                             <li><a href="javascript:void(0);">Aaron<img
-                                                        src="{{ asset('assets/img/profiles/avatar-10.jpg') }}"
+                                                        src="{{ global_asset('assets/img/profiles/avatar-10.jpg') }}"
                                                         alt="Img" class="img-fluid"></a></li>
                                         </ul>
                                     </div>
@@ -178,7 +178,7 @@
                             data-bs-toggle="dropdown">
                             <span class="user-info">
                                 <span class="user-letter">
-                                    <img src="{{ asset('assets/img/store/store-01.png') }}" alt="Store Logo"
+                                    <img src="{{ global_asset('assets/img/store/store-01.png') }}" alt="Store Logo"
                                         class="img-fluid">
                                 </span>
                                 <span class="user-detail">
@@ -188,19 +188,19 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a href="javascript:void(0);" class="dropdown-item">
-                                <img src="{{ asset('assets/img/store/store-01.png') }}" alt="Store Logo"
+                                <img src="{{ global_asset('assets/img/store/store-01.png') }}" alt="Store Logo"
                                     class="img-fluid">Freshmart
                             </a>
                             <a href="javascript:void(0);" class="dropdown-item">
-                                <img src="{{ asset('assets/img/store/store-02.png') }}" alt="Store Logo"
+                                <img src="{{ global_asset('assets/img/store/store-02.png') }}" alt="Store Logo"
                                     class="img-fluid">Grocery Apex
                             </a>
                             <a href="javascript:void(0);" class="dropdown-item">
-                                <img src="{{ asset('assets/img/store/store-03.png') }}" alt="Store Logo"
+                                <img src="{{ global_asset('assets/img/store/store-03.png') }}" alt="Store Logo"
                                     class="img-fluid">Grocery Bevy
                             </a>
                             <a href="javascript:void(0);" class="dropdown-item">
-                                <img src="{{ asset('assets/img/store/store-04.png') }}" alt="Store Logo"
+                                <img src="{{ global_asset('assets/img/store/store-04.png') }}" alt="Store Logo"
                                     class="img-fluid">Grocery Eden
                             </a>
                         </div>
@@ -324,15 +324,15 @@
                     <li class="nav-item dropdown has-arrow flag-nav nav-item-box">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="javascript:void(0);"
                             role="button">
-                            <img src="{{ asset('assets/img/flags/us-flag.svg') }}" alt="Language" class="img-fluid">
+                            <img src="{{ global_asset('assets/img/flags/us-flag.svg') }}" alt="Language" class="img-fluid">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a href="javascript:void(0);" class="dropdown-item">
-                                <img src="{{ asset('assets/img/flags/english.svg') }}" alt="Img"
+                                <img src="{{ global_asset('assets/img/flags/english.svg') }}" alt="Img"
                                     height="16">English
                             </a>
                             <a href="javascript:void(0);" class="dropdown-item">
-                                <img src="{{ asset('assets/img/flags/arabic.svg') }}" alt="Img"
+                                <img src="{{ global_asset('assets/img/flags/arabic.svg') }}" alt="Img"
                                     height="16">Arabic
                             </a>
                         </div>
@@ -367,7 +367,7 @@
                                             <div class="media d-flex">
                                                 <span class="avatar flex-shrink-0">
                                                     <img alt="Img"
-                                                        src="{{ asset('assets/img/profiles/avatar-13.jpg') }}">
+                                                        src="{{ global_asset('assets/img/profiles/avatar-13.jpg') }}">
                                                 </span>
                                                 <div class="flex-grow-1">
                                                     <p class="noti-details"><span class="noti-title">James
@@ -383,7 +383,7 @@
                                             <div class="media d-flex">
                                                 <span class="avatar flex-shrink-0">
                                                     <img alt="Img"
-                                                        src="{{ asset('assets/img/profiles/avatar-03.jpg') }}">
+                                                        src="{{ global_asset('assets/img/profiles/avatar-03.jpg') }}">
                                                 </span>
                                                 <div class="flex-grow-1">
                                                     <p class="noti-details"><span class="noti-title">Leo Kelly</span>
@@ -398,7 +398,7 @@
                                             <div class="media d-flex">
                                                 <span class="avatar flex-shrink-0">
                                                     <img alt="Img"
-                                                        src="{{ asset('assets/img/profiles/avatar-17.jpg') }}">
+                                                        src="{{ global_asset('assets/img/profiles/avatar-17.jpg') }}">
                                                 </span>
                                                 <div class="flex-grow-1">
                                                     <p class="noti-details">Payment of $50 received for Order #67890
@@ -413,7 +413,7 @@
                                             <div class="media d-flex">
                                                 <span class="avatar flex-shrink-0">
                                                     <img alt="Img"
-                                                        src="{{ asset('assets/img/profiles/avatar-02.jpg') }}">
+                                                        src="{{ global_asset('assets/img/profiles/avatar-02.jpg') }}">
                                                 </span>
                                                 <div class="flex-grow-1">
                                                     <p class="noti-details"><span class="noti-title">Andrea</span>
@@ -441,22 +441,22 @@
                         <a href="javascript:void(0);" class="nav-link userset" data-bs-toggle="dropdown">
                             <span class="user-info p-0">
                                 <span class="user-letter">
-                                    {{-- <img src="{{ Auth::user()->image ? asset('storage/' . Auth::user()->image) : asset('assets/img/profiles/avator1.jpg') }}"
-                                        alt="User Image" class="img-fluid" width="40" height="40"> --}}
+                                    <img src="{{ Auth::user()->image ? asset('storage/' . Auth::user()->image) : asset('assets/img/profiles/avator1.jpg') }}"
+                                        alt="User Image" class="img-fluid" width="40" height="40">
                                 </span>
                             </span>
                         </a>
                         <div class="dropdown-menu menu-drop-user">
                             <div class="profileset d-flex align-items-center">
                                 <span class="user-img me-2">
-                                    {{-- <img src="{{ Auth::user()->image ? asset('storage/' . Auth::user()->image) : asset('assets/img/profiles/avator1.jpg') }}"
-                                        alt="User Image" class="img-fluid" width="40" height="40"> --}}
+                                    <img src="{{ Auth::user()->image ? asset('storage/' . Auth::user()->image) : asset('assets/img/profiles/avator1.jpg') }}"
+                                        alt="User Image" class="img-fluid" width="40" height="40">
 
                                 </span>
-                                {{-- <div>
+                                <div>
                                     <h6 class="fw-medium">{{ Auth::user()->name }}</h6>
                                     <p>{{ ucfirst(Auth::user()->role) }}</p>
-                                </div> --}}
+                                </div>
                             </div>
                             <a class="dropdown-item" href="{{ route('account.profile') }}"><i
                                     class="ti ti-user-circle me-2"></i>MyProfile</a>

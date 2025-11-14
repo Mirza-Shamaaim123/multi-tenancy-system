@@ -212,6 +212,9 @@ class CheckoutController extends Controller
                     ]);
                 }
 
+                // ✅ Mail send karo
+                Mail::to($checkout->email)->send(new PlanPurchasedMail($checkout));
+
                 return view('success', ['status' => 'succeeded', 'checkout' => $checkout]);
             }
 

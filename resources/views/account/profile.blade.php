@@ -30,13 +30,13 @@
 
                 <div class="card-body profile-body">
                     <h5 class="mb-2"><i class="ti ti-user text-primary me-1"></i>Basic Information</h5>
-                    <form id="profileForm" action="{{ route('profile.update') }}" method="POST"
+                    <form id="profileForm" action="{{ url('/profile/update') }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
                         {{-- Profile Image --}}
-                        <div class="profile-pic-upload image-field mb-3">
+                        {{-- <div class="profile-pic-upload image-field mb-3">
                             <div class="profile-pic p-2">
                                 <img id="profilePreview"
                                     src="{{ $user->image ? asset('storage/' . $user->image) : asset('assets/img/users/user-49.png') }}"
@@ -45,13 +45,13 @@
 
                             <div class="mb-3">
                                 <div class="image-upload mb-0 d-inline-flex">
-                                    <input type="file" name="image" id="imageInput" accept="image/*" disabled
+                                    <input type="file" name="image" id="imageInput" accept="image" disabled
                                         style="display: none;">
                                     <div class="btn btn-primary fs-13 disabled-btn" id="changeImageBtn">Change Image</div>
                                 </div>
                                 <p class="mt-2">Upload an image below 2 MB (JPG, PNG)</p>
                             </div>
-                        </div>
+                        </div> --}}
 
                         {{-- Profile Info --}}
                         <div class="row">
@@ -77,7 +77,7 @@
                                     <input type="text" name="phone_number" class="form-control"
                                         value="{{ $user->phone_number }}" disabled>
                                 </div>
-                            </div>
+                            </div> 
 
                             <div class="col-lg-6 col-sm-12">
                                 <div class="mb-3">
@@ -208,4 +208,58 @@
             });
         });
     </script>
+
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const editBtn = document.getElementById('editBtn');
+            const saveBtn = document.getElementById('saveBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const form = document.getElementById('profileForm');
+            const inputs = document.querySelectorAll('#profileForm input');
+
+            let originalData = {};
+
+            // Save initial form values
+            inputs.forEach(input => {
+                originalData[input.name] = input.value;
+            });
+
+            // Edit button click
+            editBtn.addEventListener('click', function() {
+                inputs.forEach(input => input.disabled = false);
+                editBtn.classList.add('d-none');
+                saveBtn.classList.remove('d-none');
+                cancelBtn.classList.remove('d-none');
+            });
+
+            // Cancel button click
+            cancelBtn.addEventListener('click', function() {
+                // Reset input values to original
+                inputs.forEach(input => {
+                    input.value = originalData[input.name] || '';
+                    input.disabled = true;
+                });
+                editBtn.classList.remove('d-none');
+                saveBtn.classList.add('d-none');
+                cancelBtn.classList.add('d-none');
+            });
+
+            // Form submit (detect changes)
+            form.addEventListener('submit', function(e) {
+                let changed = false;
+
+                inputs.forEach(input => {
+                    if (input.value !== (originalData[input.name] || '')) {
+                        changed = true; // text/email/password changed
+                    }
+                });
+
+                // if no change, just refresh
+                if (!changed) {
+                    e.preventDefault();
+                    location.reload(); // refresh karega
+                }
+            });
+        });
+    </script> --}}
 @endsection
