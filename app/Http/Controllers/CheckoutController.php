@@ -250,15 +250,23 @@ class CheckoutController extends Controller
                 'warehouse_id'  => 1, // hardcoded ID (for example)
             ],
         ]);
-        
 
 
         // ✅ Domain assign karo tenant ko
         $tenant->domains()->create([
             'domain' => "{$checkout->domain}.localhost", // e.g. mystore.localhost
         ]);
+         $tenant->run(function () use ($checkout) {
+        \App\Models\User::create([
+            'name'     => $checkout->name,
+            'email'    => $checkout->email,
+            'password' => bcrypt('12345678'),
+            'role'     => 'admin', // agar role column hai to
+        ]);
+    });
 
-        // Optional: agar turant redirect karna ho
-        // return redirect("http://{$checkout->domain}.localhost:8000")->with('success', 'Your store has been created!');
-    }
+    // Optional redirect agar zarurat ho:
+    // return redirect("http://{$checkout->domain}.localhost:8000")->with('success', 'Your store has been created!');
+}
+
 }

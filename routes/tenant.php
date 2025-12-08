@@ -76,8 +76,8 @@ Route::middleware([
     });
     //  Route::get('/tenants', [TenantController::class, 'index'])->name('tenants.index');
 
-    Route::middleware(['check.plan.expiry'])->group(function () {
-        Route::get('/', [AccountController::class, 'login'])->name('tenant.login')->middleware('check.plan.expiry');
+    Route::middleware(['expiry'])->group(function () {
+        Route::get('/', [AccountController::class, 'login'])->name('tenant.login');
         Route::post('/logout', [AccountController::class, 'logout'])->name('logout');
         Route::post('/authenticate', [AccountController::class, 'authenticate'])->name('login.authenticate');
         Route::get('/register', [AccountController::class, 'register'])->name('tenant.register');

@@ -16,6 +16,7 @@ class Checkout extends Model
         'status',
         'plan_name',
         'plan_type',
+        'expiry_date',
         'amount',
     ];
 }

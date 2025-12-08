@@ -14,7 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         //
          $middleware->alias([
         'admin' => \App\Http\Middleware\AdminOnly::class,
-        'check.plan.expiry' => \App\Http\Middleware\CheckPlanExpiry::class,
+        'expiry' => \App\Http\Middleware\CheckPlanExpiry::class,
     ]);
         
     })
